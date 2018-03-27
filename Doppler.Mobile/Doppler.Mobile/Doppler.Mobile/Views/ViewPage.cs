@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using Doppler.Mobile.DI;
 using Doppler.Mobile.ViewModels;
 using Xamarin.Forms;
