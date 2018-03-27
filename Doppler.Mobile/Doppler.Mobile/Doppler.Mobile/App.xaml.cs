@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Doppler.Mobile.DI;
 using Xamarin.Forms;
 
 namespace Doppler.Mobile
@@ -11,9 +11,11 @@ namespace Doppler.Mobile
 	{
 		public App ()
 		{
-			InitializeComponent();
+            //InitializeComponent();
+            var appSetup = new AppSetup();
+            AppContainer.Container = appSetup.CreateContainer();
 
-			MainPage = new Doppler.Mobile.MainPage();
+            MainPage = new NavigationPage(new Doppler.Mobile.Views.HomePage());
 		}
 
 		protected override void OnStart ()

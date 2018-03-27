@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Doppler.Mobile.Droid</RootNamespace>
     <AssemblyName>Doppler.Mobile.Android</AssemblyName>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -53,6 +53,9 @@
     <PackageReference Include="Xamarin.Android.Support.v4" Version="25.4.0.2" />
     <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="25.4.0.2" />
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="25.4.0.2" />
+    <PackageReference Include="Autofac">
+      <Version>4.6.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -82,7 +85,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Doppler.Mobile\Doppler.Mobile.csproj">
-      <Project>{5D6ECFFE-18D2-41FB-8A6B-84D7D3194F90}</Project>
+      <Project>{D0B2F1EF-15D0-40E3-AF9A-83D5B65D161F}</Project>
       <Name>Doppler.Mobile</Name>
     </ProjectReference>
   </ItemGroup>
