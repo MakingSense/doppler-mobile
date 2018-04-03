@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+    <PackageReference Include="Autofac" Version="4.6.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,9 +20,13 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\" />
+    <Folder Include="DI\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Doppler.Mobile.Core\Doppler.Mobile.Core.csproj" />
+    <ProjectReference Include="..\Doppler.Mobile.Core\Doppler.Mobile.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\HomePage.xaml" />
   </ItemGroup>
 </Project>
