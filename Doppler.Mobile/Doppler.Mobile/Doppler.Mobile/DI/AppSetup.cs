@@ -1,5 +1,5 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
+using Doppler.Mobile.Core.DI;
 using Doppler.Mobile.Core.Services;
 using Doppler.Mobile.ViewModels;
 
@@ -16,8 +16,13 @@ namespace Doppler.Mobile.DI
 
         protected virtual void RegisterDependencies(ContainerBuilder cb)
         {
+            // Core modules
+            cb.RegisterModule<CoreSetup>();
+
+            // View Models
             cb.RegisterType<HomeViewModel>();
-            cb.RegisterType<HomeService>().As<IHomeService>();
+            cb.RegisterType<AuthenticationViewModel>();
+
         }
     }
 }

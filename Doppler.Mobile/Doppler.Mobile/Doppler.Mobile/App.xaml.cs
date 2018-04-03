@@ -15,7 +15,7 @@ namespace Doppler.Mobile
             var appSetup = new AppSetup();
             AppContainer.Container = appSetup.CreateContainer();
 
-            MainPage = new NavigationPage(new Doppler.Mobile.Views.HomePage());
+            MainPage = new NavigationPage(new Doppler.Mobile.Views.AuthenticationPage());
 		}
 
 		protected override void OnStart ()

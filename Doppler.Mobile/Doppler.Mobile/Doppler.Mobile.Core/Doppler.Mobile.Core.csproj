@@ -6,9 +6,16 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Models\" />
+    <Folder Include="Settings\" />
+    <Folder Include="DI\" />
+    <Folder Include="Networking\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Models\Dto\" />
   </ItemGroup>
 </Project>
