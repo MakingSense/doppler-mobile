@@ -48,7 +48,7 @@ namespace Doppler.Mobile.ViewModels
                 {
                     if (!string.IsNullOrEmpty(Password))
                     {
-                        var result = await _authenticationService.LoginAsync("nachocrespo81@yahoo.com", "Nacho3636");
+                        var result = await _authenticationService.LoginAsync(Email, Password);
                         if (result.IsSuccessResult)
                         {
                             //TODO: implement navigation
@@ -56,21 +56,21 @@ namespace Doppler.Mobile.ViewModels
                         }
                         else
                         {
-                            Message = "Usuario o contraseña incorrecta";
+                            Message = "Invalid username or password";
                         }
                         IsBusy = false;
                     }
                     else
                     {
                         IsBusy = false;
-                        Message = "La contraseña es requerido";
+                        Message = "The password is required";
                     }
 
                 }
                 else
                 {
                     IsBusy = false;
-                    Message = "El email es requerido";
+                    Message = "The email is required";
                 }
 
             }

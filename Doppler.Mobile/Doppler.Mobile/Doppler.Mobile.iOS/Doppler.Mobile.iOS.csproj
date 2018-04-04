@@ -111,6 +111,9 @@
     <BundleResource Include="Resources\Icon-Small%402x.png" />
     <BundleResource Include="Resources\Icon-Small%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\DopplerLogo.png" />
+    <BundleResource Include="Resources\DopplerLogo%402x.png" />
+    <BundleResource Include="Resources\DopplerLogo%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
