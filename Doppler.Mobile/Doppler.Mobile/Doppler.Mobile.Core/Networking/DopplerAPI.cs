@@ -14,7 +14,7 @@ namespace Doppler.Mobile.Core.Networking
     /// <inheritdoc />
     public class DopplerAPI : IDopplerAPI
     {
-        private HttpClient client;
+        private HttpClient _client;
         private readonly IConfigurationSettings _configuration;
         private readonly ILocalSettings _settings;
 
@@ -22,18 +22,13 @@ namespace Doppler.Mobile.Core.Networking
         {
             _configuration = configuration;
             _settings = settings;
-            setup();
-        }
-
-        private void setup()
-        {
-            client = new HttpClient();
-            client.BaseAddress = new Uri(_configuration.ApiBaseUrl);
+            _client = new HttpClient();
+            _client.BaseAddress = new Uri(_configuration.ApiBaseUrl);
         }
 
         private void SetHeaderAuthorization(string token)
         {
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", token);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", token);
         }
 
         /// <inheritdoc />
@@ -46,18 +41,18 @@ namespace Doppler.Mobile.Core.Networking
                 password = password
             };
 
-            var data = JsonConvert.SerializeObject(userAuthentication);
-            var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var loginResponse = await client.PostAsync("/tokens", content);
+            var content = new JsonContent(userAuthentication, Encoding.UTF8);
+            var loginResponse = await _client.PostAsync("/tokens", content);
 
             if (loginResponse.IsSuccessStatusCode)
             {
-                var userAuthResponse = JsonConvert.DeserializeObject<UserAuthenticationResponseDto>(loginResponse.Content.ReadAsStringAsync().Result);
+                var loginResponseString = await loginResponse.Content.ReadAsStringAsync();
+                var userAuthResponse = JsonConvert.DeserializeObject<UserAuthenticationResponseDto>(loginResponseString);
                 SetHeaderAuthorization(userAuthResponse.access_token);
                 return new Result<bool, string>(true);
             }
 
-            return new Result<bool, string>(loginResponse.ToString());
+            return new Result<bool, string>(loginResponse.ReasonPhrase);
         }
     }
 }

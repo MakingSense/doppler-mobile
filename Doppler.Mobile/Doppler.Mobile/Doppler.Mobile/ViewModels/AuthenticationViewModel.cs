@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Doppler.Mobile.Core.Services;
+using Doppler.Mobile.Helper;
 using Xamarin.Forms;
 
 namespace Doppler.Mobile.ViewModels
@@ -40,45 +41,70 @@ namespace Doppler.Mobile.ViewModels
 
         public async void LoginAsync()
         {
-            IsBusy = true;
-            Message = string.Empty;
-            try
+            if (ValidateAll())
             {
-                if (!string.IsNullOrEmpty(Email))
-                {
-                    if (!string.IsNullOrEmpty(Password))
-                    {
-                        var result = await _authenticationService.LoginAsync(Email, Password);
-                        if (result.IsSuccessResult)
-                        {
-                            //TODO: implement navigation
-                            Message = "BIEN!! PRONTO VAS A NAVEGAR";
-                        }
-                        else
-                        {
-                            Message = "Invalid username or password";
-                        }
-                        IsBusy = false;
-                    }
-                    else
-                    {
-                        IsBusy = false;
-                        Message = "The password is required";
-                    }
+                IsBusy = true;
+                var authResult = await _authenticationService.LoginAsync(Email, Password);
 
-                }
+                if (authResult.IsSuccessResult)
+                    OnLoginSuccess();
                 else
-                {
-                    IsBusy = false;
-                    Message = "The email is required";
-                }
+                    OnLoginFailed();
 
-            }
-            catch (Exception e)
-            {
                 IsBusy = false;
-                await App.Current.MainPage.DisplayAlert("Error de conexión", e.Message, "Ok");
             }
+        }
+
+        private bool ValidateEmail()
+        {
+            var validationSucceeded = false;
+            if (string.IsNullOrEmpty(Email))
+            {
+                Message = AppResources.LoginView_EmailEmpty;
+            }
+            else if (!EmailHelper.EmailIsValid(Email))
+            {
+                Message = AppResources.LoginView_EmailInvalid;
+            }
+            else
+            {
+                validationSucceeded = true;
+                Message = string.Empty;
+            }
+
+            return validationSucceeded;
+        }
+
+        private bool ValidatePassword()
+        {
+            var validationSucceeded = false;
+            if (string.IsNullOrEmpty(Password))
+            {
+                Message = AppResources.LoginView_PasswordEmpty;
+            }
+            else
+            {
+                validationSucceeded = true;
+                Message = string.Empty;
+            }
+
+            return validationSucceeded;
+        }
+
+        private bool ValidateAll()
+        {
+            return ValidateEmail() & ValidatePassword();
+        }
+
+        private void OnLoginFailed()
+        {
+            Message = AppResources.LoginView_InvalidCredentialsError;
+        }
+
+        private void OnLoginSuccess()
+        {
+            //TODO: create navigation
+            Message = "BIEN!! PRONTO VAS A NAVEGAR";
         }
     }
 }

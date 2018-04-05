@@ -1,7 +1,10 @@
 ﻿using Autofac;
-using Doppler.Mobile.Core.DI;
+using Doppler.Mobile.Core.Configuration;
+using Doppler.Mobile.Core.Networking;
 using Doppler.Mobile.Core.Services;
+using Doppler.Mobile.Core.Settings;
 using Doppler.Mobile.ViewModels;
+using Plugin.Settings;
 
 namespace Doppler.Mobile.DI
 {
@@ -16,8 +19,13 @@ namespace Doppler.Mobile.DI
 
         protected virtual void RegisterDependencies(ContainerBuilder cb)
         {
-            // Core modules
-            cb.RegisterModule<CoreSetup>();
+            // Settings
+            cb.Register(c => new LocalSettings(CrossSettings.Current)).As<ILocalSettings>();
+            cb.RegisterType<ConfigurationSettings>().As<IConfigurationSettings>().SingleInstance();
+            cb.RegisterType<DopplerAPI>().As<IDopplerAPI>().SingleInstance();
+
+            // Services
+            cb.RegisterType<AuthenticationService>().As<IAuthenticationService>();
 
             // View Models
             cb.RegisterType<HomeViewModel>();

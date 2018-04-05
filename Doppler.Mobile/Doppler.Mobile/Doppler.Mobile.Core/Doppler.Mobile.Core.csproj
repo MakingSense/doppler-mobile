@@ -13,7 +13,6 @@
     <Folder Include="Services\" />
     <Folder Include="Models\" />
     <Folder Include="Settings\" />
-    <Folder Include="DI\" />
     <Folder Include="Networking\" />
     <Folder Include="Configuration\" />
     <Folder Include="Models\Dto\" />
