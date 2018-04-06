@@ -92,10 +92,7 @@ namespace Doppler.Mobile.ViewModels
         private bool ValidateAll()
         {
             Message = string.Empty;
-            if (ValidateEmail())
-                if (ValidatePassword())
-                    return true;
-            return false;
+            return ValidateEmail() && ValidatePassword();
         }
 
         private void OnLoginFailed()
