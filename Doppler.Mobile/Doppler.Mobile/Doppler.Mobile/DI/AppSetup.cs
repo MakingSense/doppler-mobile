@@ -22,6 +22,8 @@ namespace Doppler.Mobile.DI
             // Settings
             cb.Register(c => new LocalSettings(CrossSettings.Current)).As<ILocalSettings>();
             cb.RegisterType<ConfigurationSettings>().As<IConfigurationSettings>().SingleInstance();
+
+            //Networking
             cb.RegisterType<DopplerAPI>().As<IDopplerAPI>().SingleInstance();
 
             // Services

@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Doppler.Mobile.Core.Configuration;
 using Doppler.Mobile.Core.Models.Dto;
 using Doppler.Mobile.Core.Settings;
-using Newtonsoft.Json;
+using Flurl.Http;
 
 namespace Doppler.Mobile.Core.Networking
 {
     /// <inheritdoc />
     public class DopplerAPI : IDopplerAPI
     {
-        private HttpClient _client;
         private readonly IConfigurationSettings _configuration;
         private readonly ILocalSettings _settings;
 
@@ -22,13 +17,6 @@ namespace Doppler.Mobile.Core.Networking
         {
             _configuration = configuration;
             _settings = settings;
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri(_configuration.ApiBaseUrl);
-        }
-
-        private void SetHeaderAuthorization(string token)
-        {
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", token);
         }
 
         /// <inheritdoc />
@@ -36,23 +24,39 @@ namespace Doppler.Mobile.Core.Networking
         {
             var userAuthentication = new UserAuthenticationDto
             {
-                grant_type = "password",
-                username = username,
-                password = password
+                GrantType = "password",
+                Username = username,
+                Password = password
             };
 
-            var content = new JsonContent(userAuthentication, Encoding.UTF8);
-            var loginResponse = await _client.PostAsync("/tokens", content);
-
-            if (loginResponse.IsSuccessStatusCode)
+            var url = _configuration.ApiBaseUrl + "/tokens";
+            try
             {
-                var loginResponseString = await loginResponse.Content.ReadAsStringAsync();
-                var userAuthResponse = JsonConvert.DeserializeObject<UserAuthenticationResponseDto>(loginResponseString);
-                SetHeaderAuthorization(userAuthResponse.access_token);
+                var user = await url.PostJsonAsync(userAuthentication).ReceiveJson<UserAuthenticationResponseDto>();
+                SaveToken(user.AccessToken);
                 return new Result<bool, string>(true);
             }
+            catch (FlurlHttpException ex)
+            {
+                try
+                {
+                    var dopplerError = await ex.GetResponseJsonAsync<DopplerErrorDto>();
+                    return new Result<bool, string>(dopplerError.Detail);
+                }
+                catch
+                {
+                    return new Result<bool, string>(ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result<bool, string>(ex.Message);
+            }
+        }
 
-            return new Result<bool, string>(loginResponse.ReasonPhrase);
+        private void SaveToken(string token)
+        {
+            //TODO: save token on device
         }
     }
 }

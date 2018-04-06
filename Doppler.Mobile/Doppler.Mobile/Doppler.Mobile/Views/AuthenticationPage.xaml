@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ActivityIndicator IsRunning="{Binding IsBusy, Mode=TwoWay}" Grid.RowSpan="4" Color="Red" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <ActivityIndicator IsRunning="{Binding IsBusy, Mode=TwoWay}" Grid.RowSpan="4" Color="#33AD73" VerticalOptions="Center" HorizontalOptions="Center"/>
         <StackLayout Grid.Row="1" Orientation="Vertical" Margin="0,40,0,10">
             <StackLayout Orientation="Vertical" VerticalOptions="Center" Margin="0,5,0,0" BackgroundColor="Transparent">
                 <Image Source="DopplerLogo.png" Aspect="AspectFill" Margin="10" HeightRequest="70" WidthRequest="197" VerticalOptions="Center" HorizontalOptions="Center"/>

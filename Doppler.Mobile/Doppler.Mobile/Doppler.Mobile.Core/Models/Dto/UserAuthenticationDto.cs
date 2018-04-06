@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
 namespace Doppler.Mobile.Core.Models.Dto
 {
     public class UserAuthenticationDto
     {
-        public string grant_type { get; set; }
+        [JsonProperty(PropertyName = "grant_type")]
+        public string GrantType { get; set; }
 
-        public string username { get; set; }
+        [JsonProperty(PropertyName = "username")]
+        public string Username { get; set; }
 
-        public string password { get; set; }
+        [JsonProperty(PropertyName = "password")]
+        public string Password { get; set; }
     }
 }

@@ -69,7 +69,6 @@ namespace Doppler.Mobile.ViewModels
             else
             {
                 validationSucceeded = true;
-                Message = string.Empty;
             }
 
             return validationSucceeded;
@@ -85,7 +84,6 @@ namespace Doppler.Mobile.ViewModels
             else
             {
                 validationSucceeded = true;
-                Message = string.Empty;
             }
 
             return validationSucceeded;
@@ -93,7 +91,11 @@ namespace Doppler.Mobile.ViewModels
 
         private bool ValidateAll()
         {
-            return ValidateEmail() & ValidatePassword();
+            Message = string.Empty;
+            if (ValidateEmail())
+                if (ValidatePassword())
+                    return true;
+            return false;
         }
 
         private void OnLoginFailed()
@@ -104,7 +106,7 @@ namespace Doppler.Mobile.ViewModels
         private void OnLoginSuccess()
         {
             //TODO: create navigation
-            Message = "BIEN!! PRONTO VAS A NAVEGAR";
+            //Message = "BIEN!! PRONTO VAS A NAVEGAR";
         }
     }
 }
