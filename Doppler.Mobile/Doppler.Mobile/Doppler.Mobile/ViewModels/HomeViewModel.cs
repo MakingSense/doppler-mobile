@@ -1,13 +1,12 @@
 ﻿using System;
-using Doppler.Mobile.Core.Services;
 
 namespace Doppler.Mobile.ViewModels
 {
-    public class HomeViewModel : IViewModel
+    public class HomeViewModel : BaseViewModel
     {
-        public HomeViewModel(IHomeService homeService)
+        public HomeViewModel()
         {
-            HelloText = homeService.GetHelloText();
+            HelloText = "";
         }
 
         public string HelloText { get; set; }

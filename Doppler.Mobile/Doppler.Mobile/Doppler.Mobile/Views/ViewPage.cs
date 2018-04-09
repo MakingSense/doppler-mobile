@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace Doppler.Mobile.Views
 {
-    public class ViewPage<T> : ContentPage where T : IViewModel
+    public class ViewPage<T> : ContentPage where T : BaseViewModel
     {
         readonly T _viewModel;
         public T ViewModel
@@ -20,6 +20,10 @@ namespace Doppler.Mobile.Views
                 _viewModel = AppContainer.Container.Resolve<T>();
             }
             BindingContext = _viewModel;
+        }
+
+        public void InitializeComponent() {
+            InitializeComponent();
         }
     }
 }

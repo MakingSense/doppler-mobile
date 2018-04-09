@@ -111,6 +111,9 @@
     <BundleResource Include="Resources\Icon-Small%402x.png" />
     <BundleResource Include="Resources\Icon-Small%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\DopplerLogo.png" />
+    <BundleResource Include="Resources\DopplerLogo%402x.png" />
+    <BundleResource Include="Resources\DopplerLogo%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -122,6 +125,9 @@
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
     <PackageReference Include="Autofac">
       <Version>4.6.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugins.Settings">
+      <Version>3.1.1</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
