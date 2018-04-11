@@ -46,7 +46,7 @@ namespace Doppler.Mobile.ViewModels
             if (ValidateAll())
             {
                 IsBusy = true;
-                var authResult = await _authenticationService.LoginAsync("nachocrespo81@yahoo.com", "Nacho3636");
+                var authResult = await _authenticationService.LoginAsync(Email, Password);
 
                 if (authResult.IsSuccessResult)
                     OnLoginSuccess();
@@ -105,7 +105,7 @@ namespace Doppler.Mobile.ViewModels
         private void OnLoginSuccess()
         {
             _navigationService.NavigateInNewStackToAsync<CampaignFeedViewModel>();
-            _navigationService.RemoveLastFromBackStackAsync();
+            _navigationService.RemoveBackStackAsync();
         }
     }
 }
