@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Doppler.Mobile.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         string title = string.Empty;
 
@@ -65,5 +69,26 @@ namespace Doppler.Mobile.ViewModels
         /// </summary>
         /// <param name="propertyName">Property name.</param>
         protected void OnPropertyChanged([CallerMemberName]string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        private MemberInfo GetMemberInfo(Expression expression)
+        {
+            MemberExpression operand;
+            LambdaExpression lambdaExpression = (LambdaExpression)expression;
+            if (lambdaExpression.Body as UnaryExpression != null)
+            {
+                UnaryExpression body = (UnaryExpression)lambdaExpression.Body;
+                operand = (MemberExpression)body.Operand;
+            }
+            else
+            {
+                operand = (MemberExpression)lambdaExpression.Body;
+            }
+            return operand.Member;
+        }
+
+        public virtual Task InitializeAsync(object navigationData)
+        {
+            return Task.FromResult(false);
+        }
     }
 }

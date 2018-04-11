@@ -21,9 +21,5 @@ namespace Doppler.Mobile.Views
             }
             BindingContext = _viewModel;
         }
-
-        public void InitializeComponent() {
-            InitializeComponent();
-        }
     }
 }

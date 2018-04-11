@@ -1,4 +1,6 @@
-﻿using Doppler.Mobile.DI;
+﻿using Autofac;
+using Doppler.Mobile.DI;
+using Doppler.Mobile.Navigation;
 using Xamarin.Forms;
 
 namespace Doppler.Mobile
@@ -11,7 +13,9 @@ namespace Doppler.Mobile
             var appSetup = new AppSetup();
             AppContainer.Container = appSetup.CreateContainer();
 
-            MainPage = new NavigationPage(new Views.AuthenticationPage());
+            //MainPage = new NavigationPage(new Views.AuthenticationPage());
+            var navigationService = AppContainer.Container.Resolve<INavigationService>();
+            navigationService.InitializeAsync();
         }
 
         protected override void OnStart ()

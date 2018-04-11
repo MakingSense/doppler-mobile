@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Doppler.Mobile.Core.Networking;
 using Doppler.Mobile.Core.Services;
 using Doppler.Mobile.Core.Settings;
+using Doppler.Mobile.Navigation;
 using Doppler.Mobile.ViewModels;
 using Moq;
 using Xunit;
@@ -16,7 +17,8 @@ namespace Doppler.Mobile.Test.ViewModels
         {
             // Arrange
             var authServiceMock = new Mock<IAuthenticationService>();
-            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object);
+            var navigationServiceMock = new Mock<INavigationService>();
+            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
 
             // Act
             authenticationViewModel.LoginAsync();
@@ -31,7 +33,8 @@ namespace Doppler.Mobile.Test.ViewModels
         {
             // Arrange
             var authServiceMock = new Mock<IAuthenticationService>();
-            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object);
+            var navigationServiceMock = new Mock<INavigationService>();
+            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
             authenticationViewModel.Email = "NotEmail";
 
             // Act
@@ -47,7 +50,8 @@ namespace Doppler.Mobile.Test.ViewModels
         {
             // Arrange
             var authServiceMock = new Mock<IAuthenticationService>();
-            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object);
+            var navigationServiceMock = new Mock<INavigationService>();
+            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
             authenticationViewModel.Email = "email@Test.com";
 
             // Act
@@ -66,7 +70,8 @@ namespace Doppler.Mobile.Test.ViewModels
             authServiceMock
                 .Setup(auth => auth.LoginAsync(It.IsAny<String>(), It.IsAny<String>()))
                 .ReturnsAsync(new Result<bool, string>(errorValue: "errorMsg"));
-            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object);
+            var navigationServiceMock = new Mock<INavigationService>();
+            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
             authenticationViewModel.Email = "test@Email.com";
             authenticationViewModel.Password = "Password";
 
@@ -87,7 +92,8 @@ namespace Doppler.Mobile.Test.ViewModels
             authServiceMock
                 .Setup(auth => auth.LoginAsync(It.IsAny<String>(), It.IsAny<String>()))
                 .ReturnsAsync(new Result<bool, string>(true));
-            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object);
+            var navigationServiceMock = new Mock<INavigationService>();
+            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
             authenticationViewModel.Email = "test@Email.com";
             authenticationViewModel.Password = "Password";
 

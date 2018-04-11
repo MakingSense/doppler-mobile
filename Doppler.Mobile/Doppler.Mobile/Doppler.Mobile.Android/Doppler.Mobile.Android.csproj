@@ -8,14 +8,14 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Doppler.Mobile.Droid</RootNamespace>
     <AssemblyName>Doppler.Mobile.Android</AssemblyName>
-    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -96,5 +96,18 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <AndroidAsset Include="Assets\ProximaNova-BoldIt.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-RegularItalic.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-Black.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-Bold.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-Light.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-Semibold.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-RegItalic.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-Regular.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-SemiboldItalic.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-Extrabold.otf" />
+    <AndroidAsset Include="Assets\ProximaNova-LightItalic.otf" />
+  </ItemGroup>
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

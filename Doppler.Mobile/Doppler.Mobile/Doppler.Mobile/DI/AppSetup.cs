@@ -3,8 +3,10 @@ using Doppler.Mobile.Core.Configuration;
 using Doppler.Mobile.Core.Networking;
 using Doppler.Mobile.Core.Services;
 using Doppler.Mobile.Core.Settings;
+using Doppler.Mobile.Navigation;
 using Doppler.Mobile.ViewModels;
 using Plugin.Settings;
+using Xamarin.Forms;
 
 namespace Doppler.Mobile.DI
 {
@@ -29,8 +31,10 @@ namespace Doppler.Mobile.DI
             // Services
             cb.RegisterType<AuthenticationService>().As<IAuthenticationService>();
 
+            cb.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
+
             // View Models
-            cb.RegisterType<HomeViewModel>();
+            cb.RegisterType<CampaignFeedViewModel>();
             cb.RegisterType<AuthenticationViewModel>();
 
         }

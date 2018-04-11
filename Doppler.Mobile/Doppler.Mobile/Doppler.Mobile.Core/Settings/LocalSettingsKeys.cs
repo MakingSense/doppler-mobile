@@ -2,6 +2,7 @@
 {
     public class LocalSettingsKeys
     {
-        public const string IsUserLoggedIn= "IsUserLoggedIn";
+        public const string IsUserLoggedIn = "is_user_logged_in";
+        public const string AuthAccessToken = "auth_access_token";
     }
 }
