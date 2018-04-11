@@ -30,9 +30,9 @@ namespace Doppler.Mobile.Navigation
 
         public Task InitializeAsync()
         {
-            if (_settingsService.IsUserLoggedIn)
-                return NavigateInNewStackToAsync<CampaignFeedViewModel>();
-            else
+            //if (_settingsService.IsUserLoggedIn)
+            //    return NavigateInNewStackToAsync<CampaignFeedViewModel>();
+            //else
                 return NavigateInNewStackToAsync<AuthenticationViewModel>();
         }
 

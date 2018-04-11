@@ -12,8 +12,6 @@ namespace Doppler.Mobile
             //InitializeComponent();
             var appSetup = new AppSetup();
             AppContainer.Container = appSetup.CreateContainer();
-
-            //MainPage = new NavigationPage(new Views.AuthenticationPage());
             var navigationService = AppContainer.Container.Resolve<INavigationService>();
             navigationService.InitializeAsync();
         }
