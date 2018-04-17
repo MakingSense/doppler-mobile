@@ -68,7 +68,7 @@ namespace Doppler.Mobile.Test.ViewModels
             // Arrange
             var authServiceMock = new Mock<IAuthenticationService>();
             authServiceMock
-                .Setup(auth => auth.LoginAsync(It.IsAny<String>(), It.IsAny<String>()))
+                .Setup(auth => auth.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<bool, string>(errorValue: "errorMsg"));
             var navigationServiceMock = new Mock<INavigationService>();
             var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
@@ -90,7 +90,7 @@ namespace Doppler.Mobile.Test.ViewModels
             // Arrange
             var authServiceMock = new Mock<IAuthenticationService>();
             authServiceMock
-                .Setup(auth => auth.LoginAsync(It.IsAny<String>(), It.IsAny<String>()))
+                .Setup(auth => auth.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<bool, string>(true));
             var navigationServiceMock = new Mock<INavigationService>();
             var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);

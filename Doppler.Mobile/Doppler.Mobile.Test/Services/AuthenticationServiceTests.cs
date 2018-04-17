@@ -6,7 +6,7 @@ using Doppler.Mobile.Core.Settings;
 using Moq;
 using Xunit;
 
-namespace Doppler.Mobile.Test
+namespace Doppler.Mobile.Test.Services
 {
     public class AuthenticationServiceTests
     {
@@ -17,7 +17,7 @@ namespace Doppler.Mobile.Test
             var localSettingsMock = new Mock<ILocalSettings>();
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
-                .Setup(dAPI => dAPI.LoginAsync(It.IsAny<String>(), It.IsAny<String>()))
+                .Setup(dAPI => dAPI.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<bool, string>(successValue: true));
             IAuthenticationService authenticationService = new AuthenticationService(localSettingsMock.Object, dopplerAPIMock.Object);
 
@@ -39,7 +39,7 @@ namespace Doppler.Mobile.Test
             var localSettingsMock = new Mock<ILocalSettings>();
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
-                .Setup(dAPI => dAPI.LoginAsync(It.IsAny<String>(), It.IsAny<String>()))
+                .Setup(dAPI => dAPI.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<bool, string>(errorValue: loginFailResult));
             IAuthenticationService authenticationService = new AuthenticationService(localSettingsMock.Object, dopplerAPIMock.Object);
 

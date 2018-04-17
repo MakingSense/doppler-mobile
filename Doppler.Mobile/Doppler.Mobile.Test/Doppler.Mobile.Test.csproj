@@ -6,6 +6,9 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>TRACE;DEBUG;NETCOREAPP2_0;</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />
     <PackageReference Include="xunit" Version="2.2.0" />
@@ -17,6 +20,7 @@
     <Folder Include="Services\" />
     <Folder Include="Networking\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Mocks\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Doppler.Mobile\Doppler.Mobile\Doppler.Mobile.csproj" />

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Doppler.Mobile.Core.Settings;
 using Doppler.Mobile.Core.Networking;
 
@@ -25,13 +24,19 @@ namespace Doppler.Mobile.Core.Services
             if (!loginResponse.IsSuccessResult)
                 return new Result<bool, string>(loginResponse.ErrorValue);
 
-            SaveCredentials();
             return new Result<bool, string>(true);
         }
 
-        private void SaveCredentials()
+        /// <inheritdoc />
+        public Result<bool, string> Logout()
         {
-            _localSettings.AddOrUpdateValue(LocalSettingsKeys.IsUserLoggedIn, true);
+            if (!_localSettings.IsUserLoggedIn)
+                return new Result<bool, string>(errorValue: "AppResources.Logout_NotUserLoggedIn");
+
+            _localSettings.AuthAccessToken = string.Empty;
+            _localSettings.AccountNameLoggedIn = string.Empty;
+
+            return new Result<bool, string>(successValue: true);
         }
     }
 }

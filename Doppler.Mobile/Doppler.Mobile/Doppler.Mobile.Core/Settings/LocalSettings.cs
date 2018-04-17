@@ -23,8 +23,14 @@ namespace Doppler.Mobile.Core.Settings
         /// <inheritdoc />
         public bool IsUserLoggedIn
         {
-            get => GetValueOrDefault(LocalSettingsKeys.IsUserLoggedIn, false);
-            set => AddOrUpdateValue(LocalSettingsKeys.IsUserLoggedIn, value);
+            get => !string.IsNullOrEmpty(AuthAccessToken);
+        }
+
+        /// <inheritdoc />
+        public string AccountNameLoggedIn
+        {
+            get => GetValueOrDefault(LocalSettingsKeys.AccountNameLoggedIn, string.Empty);
+            set => AddOrUpdateValue(LocalSettingsKeys.AccountNameLoggedIn, value);
         }
 
         /// <inheritdoc />

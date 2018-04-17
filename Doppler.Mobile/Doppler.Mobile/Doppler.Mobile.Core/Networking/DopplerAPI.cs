@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Doppler.Mobile.Core.Configuration;
 using Doppler.Mobile.Core.Models.Dto;
@@ -33,7 +34,7 @@ namespace Doppler.Mobile.Core.Networking
             try
             {
                 var user = await url.PostJsonAsync(userAuthentication).ReceiveJson<UserAuthenticationResponseDto>();
-                SaveToken(user.AccessToken);
+                SaveLoggedAccountInfo(user.AccessToken, user.Username);
                 return new Result<bool, string>(true);
             }
             catch (FlurlHttpException ex)
@@ -54,9 +55,44 @@ namespace Doppler.Mobile.Core.Networking
             }
         }
 
-        private void SaveToken(string token)
+        /// <inheritdoc />
+        public async Task<Result<PageDto<CampaignDto>, string>> GetCampaignsAsync(string accountName, int pageNumber)
         {
-            //TODO: save token on device
+            var url = _configuration.ApiBaseUrl + $"accounts/{accountName}/campaigns?page={pageNumber}";
+            var token = "CCC8C153443B33C1062BE28837DCC549";//GetAccessToken();
+            try
+            {
+                var page = await url.WithHeader("Authorization", $"token {token}").GetAsync().ReceiveJson<PageDto<CampaignDto>>();
+
+                return new Result<PageDto<CampaignDto>, string>(page);
+            }
+            catch (FlurlHttpException ex)
+            {
+                try
+                {
+                    var dopplerError = await ex.GetResponseJsonAsync<DopplerErrorDto>();
+                    return new Result<PageDto<CampaignDto>, string>(dopplerError.Detail);
+                }
+                catch
+                {
+                    return new Result<PageDto<CampaignDto>, string>(ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result<PageDto<CampaignDto>, string>(ex.Message);
+            }
+        }
+
+        private void SaveLoggedAccountInfo(string token, string accountName)
+        {
+            _settings.AuthAccessToken = token;
+            _settings.AccountNameLoggedIn = accountName;
+        }
+
+        private string GetAccessToken()
+        {
+            return _settings.AuthAccessToken;
         }
     }
 }

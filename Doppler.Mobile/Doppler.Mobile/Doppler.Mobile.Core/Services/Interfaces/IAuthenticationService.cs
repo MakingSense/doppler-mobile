@@ -12,5 +12,9 @@ namespace Doppler.Mobile.Core.Services
         /// <param name="password"> Password to authenticate with </param>
         /// <returns> True if login was successful, otherwise error message </returns>
         Task<Result<bool, string>> LoginAsync(string username, string password);
+
+        /// <summary> Logout the current user </summary>
+        /// <returns> True if logout was successful, otherwise error message </returns>
+        Result<bool, string> Logout();
     }
 }

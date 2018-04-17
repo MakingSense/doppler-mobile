@@ -11,6 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="CustomControlls\ExtendedViewCell.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="App.xaml.cs">
       <DependentUpon>*.xaml</DependentUpon>
     </Compile>
@@ -54,6 +57,8 @@
     <Folder Include="DI\" />
     <Folder Include="Helper\" />
     <Folder Include="Navigation\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
 
   <ItemGroup>
