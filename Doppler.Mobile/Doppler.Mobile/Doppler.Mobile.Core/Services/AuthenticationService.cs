@@ -24,6 +24,9 @@ namespace Doppler.Mobile.Core.Services
             if (!loginResponse.IsSuccessResult)
                 return new Result<bool, string>(loginResponse.ErrorValue);
 
+            var user = loginResponse.SuccessValue;
+            SaveLoggedAccountInfo(user.AccessToken, user.Username);
+
             return new Result<bool, string>(true);
         }
 
@@ -37,6 +40,12 @@ namespace Doppler.Mobile.Core.Services
             _localSettings.AccountNameLoggedIn = string.Empty;
 
             return new Result<bool, string>(successValue: true);
+        }
+
+        private void SaveLoggedAccountInfo(string token, string accountName)
+        {
+            _localSettings.AuthAccessToken = token;
+            _localSettings.AccountNameLoggedIn = accountName;
         }
     }
 }

@@ -38,5 +38,17 @@ namespace Doppler.Mobile.Test.Mocks
                 Status = $"Status-{identifier}"
             };
         }
+
+        public static UserAuthenticationResponseDto GetUserAuthenticationResponseDto()
+        {
+            return new UserAuthenticationResponseDto
+            {
+                AccessToken = "AccessToken",
+                AccountId = 1,
+                Username = "userTest",
+                IssuedAt = "testDate",
+                ExpirationDate = "Expiration Date"
+            };
+        }
     }
 }

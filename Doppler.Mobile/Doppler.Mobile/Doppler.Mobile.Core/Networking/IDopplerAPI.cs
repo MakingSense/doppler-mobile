@@ -10,8 +10,8 @@ namespace Doppler.Mobile.Core.Networking
         /// <summary> Authenticates with username and password </summary>
         /// <param name="username"> Username to authenticate with </param>
         /// <param name="password"> Password to authenticate with </param>
-        /// <returns> True if login was successful, otherwise error message </returns>
-        Task<Result<bool, string>> LoginAsync(string username, string password);
+        /// <returns> User if login was successful, otherwise error message </returns>
+        Task<Result<UserAuthenticationResponseDto, string>> LoginAsync(string username, string password);
 
         /// <summary> Gets a campaign list with account name and number of page </summary>
         /// <param name="accountName"> Account name to get campaign list </param>

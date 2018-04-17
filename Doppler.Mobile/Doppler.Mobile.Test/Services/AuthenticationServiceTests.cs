@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Doppler.Mobile.Core.Models.Dto;
 using Doppler.Mobile.Core.Networking;
 using Doppler.Mobile.Core.Services;
 using Doppler.Mobile.Core.Settings;
@@ -14,11 +15,12 @@ namespace Doppler.Mobile.Test.Services
         public async Task LoginAsync_ShouldReturnTrue_WhenAuthenticationIsSuccessful()
         {
             // Arrange
+            var userAuthenticationResponseDto = Mocks.Mocks.GetUserAuthenticationResponseDto();
             var localSettingsMock = new Mock<ILocalSettings>();
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
                 .Setup(dAPI => dAPI.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(new Result<bool, string>(successValue: true));
+                .ReturnsAsync(new Result<UserAuthenticationResponseDto, string>(successValue: userAuthenticationResponseDto));
             IAuthenticationService authenticationService = new AuthenticationService(localSettingsMock.Object, dopplerAPIMock.Object);
 
             // Act
@@ -40,7 +42,7 @@ namespace Doppler.Mobile.Test.Services
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
                 .Setup(dAPI => dAPI.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(new Result<bool, string>(errorValue: loginFailResult));
+                .ReturnsAsync(new Result<UserAuthenticationResponseDto, string>(errorValue: loginFailResult));
             IAuthenticationService authenticationService = new AuthenticationService(localSettingsMock.Object, dopplerAPIMock.Object);
 
             // Act

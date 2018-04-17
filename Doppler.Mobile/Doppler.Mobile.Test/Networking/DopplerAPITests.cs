@@ -21,14 +21,7 @@ namespace Doppler.Mobile.Test.Networking
 
             using (var httpTest = new HttpTest())
             {
-                var userAuthenticationResponse = new UserAuthenticationResponseDto
-                {
-                    AccessToken = "AccessToken",
-                    AccountId = 1,
-                    Username = "userTest",
-                    IssuedAt = "testDate",
-                    ExpirationDate = "Expiration Date"
-                };
+                var userAuthenticationResponse = Mocks.Mocks.GetUserAuthenticationResponseDto();
 
                 httpTest.RespondWithJson(userAuthenticationResponse);
 
@@ -41,7 +34,7 @@ namespace Doppler.Mobile.Test.Networking
                 Assert.True(loginResult.IsSuccessResult);
                 Assert.Null(loginResult.ErrorValue);
                 Assert.NotNull(loginResult.SuccessValue);
-                Assert.Equal(true, loginResult.SuccessValue);
+                Assert.Equal(userAuthenticationResponse.AccessToken, loginResult.SuccessValue.AccessToken);
             }
         }
 
@@ -74,7 +67,7 @@ namespace Doppler.Mobile.Test.Networking
                 // Assert
                 Assert.False(loginResult.IsSuccessResult);
                 Assert.NotNull(loginResult.ErrorValue);
-                Assert.False(loginResult.SuccessValue);
+                Assert.Null(loginResult.SuccessValue);
                 Assert.Equal(dopplerError.Detail, loginResult.ErrorValue);
             }
         }
@@ -102,7 +95,7 @@ namespace Doppler.Mobile.Test.Networking
                 // Assert
                 Assert.False(loginResult.IsSuccessResult);
                 Assert.NotNull(loginResult.ErrorValue);
-                Assert.False(loginResult.SuccessValue);
+                Assert.Null(loginResult.SuccessValue);
                 Assert.StartsWith(errorMsg, loginResult.ErrorValue);
             }
         }
