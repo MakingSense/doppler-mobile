@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Doppler.Mobile.Core.Services;
 using Doppler.Mobile.Helper;
+using Doppler.Mobile.Navigation;
 using Xamarin.Forms;
 
 namespace Doppler.Mobile.ViewModels
@@ -9,9 +9,11 @@ namespace Doppler.Mobile.ViewModels
     public class AuthenticationViewModel : BaseViewModel
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly INavigationService _navigationService;
 
-        public AuthenticationViewModel(IAuthenticationService authenticationService)
+        public AuthenticationViewModel(IAuthenticationService authenticationService, INavigationService navigationService)
         {
+            _navigationService = navigationService;
             _authenticationService = authenticationService;
             LoginCommand  = new Command(LoginAsync);
         }
@@ -102,8 +104,8 @@ namespace Doppler.Mobile.ViewModels
 
         private void OnLoginSuccess()
         {
-            //TODO: create navigation
-            //Message = "BIEN!! PRONTO VAS A NAVEGAR";
+            _navigationService.NavigateInNewStackToAsync<CampaignFeedViewModel>();
+            _navigationService.RemoveBackStackAsync();
         }
     }
 }

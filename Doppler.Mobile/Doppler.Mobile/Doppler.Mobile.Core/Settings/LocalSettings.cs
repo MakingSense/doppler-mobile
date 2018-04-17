@@ -14,6 +14,20 @@ namespace Doppler.Mobile.Core.Settings
         }
 
         /// <inheritdoc />
+        public string AuthAccessToken
+        {
+            get => GetValueOrDefault(LocalSettingsKeys.IsUserLoggedIn, string.Empty);
+            set => AddOrUpdateValue(LocalSettingsKeys.IsUserLoggedIn, value);
+        }
+
+        /// <inheritdoc />
+        public bool IsUserLoggedIn
+        {
+            get => GetValueOrDefault(LocalSettingsKeys.IsUserLoggedIn, false);
+            set => AddOrUpdateValue(LocalSettingsKeys.IsUserLoggedIn, value);
+        }
+
+        /// <inheritdoc />
         public bool AddOrUpdateValue<T>(string key, T value)
         {
             return _settingsService.AddOrUpdateValue(key, JsonConvert.SerializeObject(value));

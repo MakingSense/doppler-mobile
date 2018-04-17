@@ -9,6 +9,12 @@ namespace Doppler.Mobile.Core.Settings
     /// </summary>
     public interface ILocalSettings
     {
+        /// <summary> Fast access to data related to the key "IsUserLoggedIn" </summary>
+        bool IsUserLoggedIn { get; set; }
+
+        /// <summary> Fast access to data related to the key "AuthAccessToken" </summary>
+        string AuthAccessToken { get; set; }
+
         /// <summary> Add or update a key with a new value </summary>
         /// <param name="key"> The key is used to refer to an element </param>
         /// <param name="value"> The value is the object which will be stored </param>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<w:ViewPage NavigationPage.HasNavigationBar="false"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:w="clr-namespace:Doppler.Mobile.Views;assembly=Doppler.Mobile"
-    x:Class="Doppler.Mobile.Views.AuthenticationPage"
-    x:TypeArguments="viewModel:AuthenticationViewModel"
-    xmlns:viewModel="clr-namespace:Doppler.Mobile.ViewModels"
+<w:ViewPage NavigationPage.HasNavigationBar="false" 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:w="clr-namespace:Doppler.Mobile.Views;assembly=Doppler.Mobile" 
+    x:Class="Doppler.Mobile.Views.AuthenticationView" 
+    x:TypeArguments="viewModel:AuthenticationViewModel" 
+    xmlns:viewModel="clr-namespace:Doppler.Mobile.ViewModels" 
     >
     <ContentPage.Content>
         <Grid x:Name="LayoutRoot" BackgroundColor="#FCE579">
@@ -35,4 +35,4 @@
         </StackLayout>
     </Grid>
     </ContentPage.Content>
-</w:ViewPage >
+</w:ViewPage>

@@ -18,10 +18,34 @@
       <DependentUpon>*.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\AuthenticationPage.xaml.cs">
-      <DependentUpon>AuthenticationPage.xaml</DependentUpon>
+      <DependentUpon>AuthenticationView.xaml</DependentUpon>
     </Compile>
     <Compile Update="AppResources.Designer.cs">
       <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Pages\AuthenticationPage.xaml.cs">
+      <DependentUpon>AuthenticationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Pages\CampaignFeedPage.xaml.cs">
+      <DependentUpon>CampaignFeedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Pages\NavigationPage.xaml.cs">
+      <DependentUpon>NavigationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\CampaignFeedPage.xaml.cs">
+      <DependentUpon>CampaignFeedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\AuthenticationView.xaml.cs">
+      <DependentUpon>AuthenticationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\CampaignFeedView.xaml.cs">
+      <DependentUpon>CampaignFeedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\NavigationView.xaml.cs">
+      <DependentUpon>CustomNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\CustomNavigationView.xaml.cs">
+      <DependentUpon>CustomNavigationView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -29,6 +53,7 @@
     <Folder Include="ViewModels\" />
     <Folder Include="DI\" />
     <Folder Include="Helper\" />
+    <Folder Include="Navigation\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Views\HomePage.xaml" />
+    <EmbeddedResource Remove="Views\NavigationPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="AppResources.resx">
