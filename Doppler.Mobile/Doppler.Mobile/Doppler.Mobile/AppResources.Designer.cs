@@ -65,6 +65,12 @@ namespace Doppler.Mobile {
             }
         }
         
+        public static string LoginView_ApiKeyEmpty {
+            get {
+                return ResourceManager.GetString("LoginView_ApiKeyEmpty", resourceCulture);
+            }
+        }
+        
         public static string LoginView_InvalidCredentialsError {
             get {
                 return ResourceManager.GetString("LoginView_InvalidCredentialsError", resourceCulture);

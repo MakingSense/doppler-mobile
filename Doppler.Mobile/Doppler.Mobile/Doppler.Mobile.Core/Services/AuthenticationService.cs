@@ -17,15 +17,15 @@ namespace Doppler.Mobile.Core.Services
         }
 
         /// <inheritdoc />
-        public async Task<Result<bool, string>> LoginAsync(string username, string password)
+        public async Task<Result<bool, string>> LoginAsync(string username, string password, string apiKey)
         {
-            var loginResponse = await _dopplerApi.LoginAsync(username, password);
+            var loginResponse = await _dopplerApi.LoginAsync(username, password, apiKey);
 
             if (!loginResponse.IsSuccessResult)
                 return new Result<bool, string>(loginResponse.ErrorValue);
 
             var user = loginResponse.SuccessValue;
-            SaveLoggedAccountInfo(user.AccessToken, user.Username);
+            SaveLoggedAccountInfo(apiKey, user.Username);
 
             return new Result<bool, string>(true);
         }

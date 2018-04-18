@@ -28,7 +28,7 @@ namespace Doppler.Mobile.Test.Networking
                 IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
 
                 // Act
-                var loginResult = await dopplerAPI.LoginAsync("TestUser@domain.com", "TestPassword");
+                var loginResult = await dopplerAPI.LoginAsync("TestUser@domain.com", "TestPassword", "apiKey");
 
                 // Assert
                 Assert.True(loginResult.IsSuccessResult);
@@ -62,7 +62,7 @@ namespace Doppler.Mobile.Test.Networking
                 IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
 
                 // Act
-                var loginResult = await dopplerAPI.LoginAsync("TestUser@domain.com", "TestPassword");
+                var loginResult = await dopplerAPI.LoginAsync("TestUser@domain.com", "TestPassword", "apiKey");
 
                 // Assert
                 Assert.False(loginResult.IsSuccessResult);
@@ -90,7 +90,7 @@ namespace Doppler.Mobile.Test.Networking
                 IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
 
                 // Act
-                var loginResult = await dopplerAPI.LoginAsync("TestUser@domain.com", "TestPassword");
+                var loginResult = await dopplerAPI.LoginAsync("TestUser@domain.com", "TestPassword", "apiKey");
 
                 // Assert
                 Assert.False(loginResult.IsSuccessResult);

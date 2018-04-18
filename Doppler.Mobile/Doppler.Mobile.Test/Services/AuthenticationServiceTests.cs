@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Doppler.Mobile.Core.Models.Dto;
 using Doppler.Mobile.Core.Networking;
@@ -19,12 +18,12 @@ namespace Doppler.Mobile.Test.Services
             var localSettingsMock = new Mock<ILocalSettings>();
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
-                .Setup(dAPI => dAPI.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(dAPI => dAPI.LoginAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<UserAuthenticationResponseDto, string>(successValue: userAuthenticationResponseDto));
             IAuthenticationService authenticationService = new AuthenticationService(localSettingsMock.Object, dopplerAPIMock.Object);
 
             // Act
-            var loginResult = await authenticationService.LoginAsync("TestUser@domain.com", "TestPassword");
+            var loginResult = await authenticationService.LoginAsync("TestUser@domain.com", "TestPassword", "apiKey");
 
             // Assert
             Assert.True(loginResult.IsSuccessResult);
@@ -41,12 +40,12 @@ namespace Doppler.Mobile.Test.Services
             var localSettingsMock = new Mock<ILocalSettings>();
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
-                .Setup(dAPI => dAPI.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(dAPI => dAPI.LoginAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<UserAuthenticationResponseDto, string>(errorValue: loginFailResult));
             IAuthenticationService authenticationService = new AuthenticationService(localSettingsMock.Object, dopplerAPIMock.Object);
 
             // Act
-            var loginResult = await authenticationService.LoginAsync("TestUser@domain.com", "TestPassword");
+            var loginResult = await authenticationService.LoginAsync("TestUser@domain.com", "TestPassword", "apiKey");
 
             // Assert
             Assert.False(loginResult.IsSuccessResult);

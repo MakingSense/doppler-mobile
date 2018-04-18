@@ -10,8 +10,9 @@ namespace Doppler.Mobile.Core.Services
         /// <summary> Authenticates API with username and password </summary>
         /// <param name="username"> Username to authenticate with </param>
         /// <param name="password"> Password to authenticate with </param>
+        /// <param name="apiKey"> Api key to authenticate with </param>
         /// <returns> True if login was successful, otherwise error message </returns>
-        Task<Result<bool, string>> LoginAsync(string username, string password);
+        Task<Result<bool, string>> LoginAsync(string username, string password, string apiKey);
 
         /// <summary> Logout the current user </summary>
         /// <returns> True if logout was successful, otherwise error message </returns>

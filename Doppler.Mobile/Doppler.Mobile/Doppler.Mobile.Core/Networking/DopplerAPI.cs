@@ -21,7 +21,7 @@ namespace Doppler.Mobile.Core.Networking
         }
 
         /// <inheritdoc />
-        public async Task<Result<UserAuthenticationResponseDto, string>> LoginAsync(string username, string password)
+        public async Task<Result<UserAuthenticationResponseDto, string>> LoginAsync(string username, string password, string apiKey)
         {
             var userAuthentication = new UserAuthenticationDto
             {

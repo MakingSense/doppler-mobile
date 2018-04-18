@@ -34,6 +34,12 @@ namespace Doppler.Mobile.ViewModels
             set { SetProperty(ref _password, value); }
         }
 
+        private string _apiKey;
+        public string ApiKey
+        {
+            get { return _apiKey; }
+            set { SetProperty(ref _apiKey, value); }
+        }
         private string _message;
         public string Message
         {
@@ -46,7 +52,7 @@ namespace Doppler.Mobile.ViewModels
             if (ValidateAll())
             {
                 IsBusy = true;
-                var authResult = await _authenticationService.LoginAsync(Email, Password);
+                var authResult = await _authenticationService.LoginAsync(Email, Password, ApiKey);
 
                 if (authResult.IsSuccessResult)
                     OnLoginSuccess();
@@ -91,10 +97,25 @@ namespace Doppler.Mobile.ViewModels
             return validationSucceeded;
         }
 
+        private bool ValidateApiKey()
+        {
+            var validationSucceeded = false;
+            if (string.IsNullOrEmpty(ApiKey))
+            {
+                Message = AppResources.LoginView_ApiKeyEmpty;
+            }
+            else
+            {
+                validationSucceeded = true;
+            }
+
+            return validationSucceeded;
+        }
+
         private bool ValidateAll()
         {
             Message = string.Empty;
-            return ValidateEmail() && ValidatePassword();
+            return ValidateEmail() && ValidatePassword() && ValidateApiKey();
         }
 
         private void OnLoginFailed()
