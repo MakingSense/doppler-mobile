@@ -89,6 +89,7 @@ namespace Doppler.Mobile.Test.ViewModels
             var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
             authenticationViewModel.Email = "test@Email.com";
             authenticationViewModel.Password = "Password";
+            authenticationViewModel.ApiKey = "ApiKey";
 
             // Act
             authenticationViewModel.LoginAsync();
@@ -97,6 +98,7 @@ namespace Doppler.Mobile.Test.ViewModels
             Assert.Equal(AppResources.LoginView_InvalidCredentialsError, authenticationViewModel.Message);
             Assert.False(string.IsNullOrEmpty(authenticationViewModel.Password));
             Assert.False(string.IsNullOrEmpty(authenticationViewModel.Email));
+            Assert.False(string.IsNullOrEmpty(authenticationViewModel.ApiKey));
         }
 
         [Fact]
@@ -111,6 +113,7 @@ namespace Doppler.Mobile.Test.ViewModels
             var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
             authenticationViewModel.Email = "test@Email.com";
             authenticationViewModel.Password = "Password";
+            authenticationViewModel.ApiKey= "ApiKey";
 
             // Act
             authenticationViewModel.LoginAsync();
@@ -118,6 +121,7 @@ namespace Doppler.Mobile.Test.ViewModels
             // Assert
             Assert.True(string.IsNullOrEmpty(authenticationViewModel.Message));
             Assert.False(string.IsNullOrEmpty(authenticationViewModel.Password));
+            Assert.False(string.IsNullOrEmpty(authenticationViewModel.ApiKey));
             Assert.False(string.IsNullOrEmpty(authenticationViewModel.Email));
         }
     }

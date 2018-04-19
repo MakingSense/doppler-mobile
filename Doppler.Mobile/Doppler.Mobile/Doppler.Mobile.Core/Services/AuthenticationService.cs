@@ -34,7 +34,7 @@ namespace Doppler.Mobile.Core.Services
         public Result<bool, string> Logout()
         {
             if (!_localSettings.IsUserLoggedIn)
-                return new Result<bool, string>(errorValue: "AppResources.Logout_NotUserLoggedIn");
+                return new Result<bool, string>(errorValue: CoreResources.NotUserLoggedIn);
 
             _localSettings.AuthAccessToken = string.Empty;
             _localSettings.AccountNameLoggedIn = string.Empty;

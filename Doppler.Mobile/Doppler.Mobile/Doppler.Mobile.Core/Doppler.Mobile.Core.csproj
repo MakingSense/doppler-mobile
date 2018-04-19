@@ -28,4 +28,15 @@
     <Compile Remove="Networking\RestClient\IRestClient.cs" />
     <Compile Remove="Networking\JsonContent.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="CoreResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CoreResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CoreResources.Designer.cs">
+      <DependentUpon>CoreResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

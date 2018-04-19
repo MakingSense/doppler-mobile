@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace Doppler.Mobile.ViewModels
 {
-    public class CampaignFeedViewModel: BaseViewModel
+    public class CampaignFeedViewModel : BaseViewModel
     {
         private readonly ICampaignService _campaignService;
         private readonly IAuthenticationService _authenticationService;
@@ -37,6 +37,20 @@ namespace Doppler.Mobile.ViewModels
 
         public Command LogoutCommand { get; set; }
 
+        private int? _currentCampaignPage { get; set; }
+
+        public int CurrentCampaignPageNumber
+        {
+            get => _currentCampaignPage ?? 0;
+        }
+
+        private int? _totalPageNumber { get; set; }
+
+        public int TotalPageNumber
+        {
+            get => _totalPageNumber ?? int.MaxValue;
+        }
+
         public override async Task InitializeAsync(object navigationData)
         {
             await ExecuteFetchCampaignsCommand();
@@ -56,58 +70,52 @@ namespace Doppler.Mobile.ViewModels
 
         public bool CanExecuteLoadMoreCommand(Campaign item)
         {
-            return !IsBusy && Campaigns.Count != 0 && Campaigns.Last().CampaignId == item.CampaignId;
+            return !IsBusy && Campaigns.Count != 0 && Campaigns.Last().CampaignId == item.CampaignId && HasMorePagesToShow();
         }
 
         public async void ExecuteFetchMoreCampaignsCommand(Campaign item)
         {
-            if (IsBusy)
-                return;
-
-            IsBusy = true;
-
-            try
-            {
-                var campaigns = await _campaignService.GetMoreCampaignsAsync();
-                foreach (var campaign in campaigns)
-                {
-                    Campaigns.Add(campaign);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            var nextCampaignsPage = (_currentCampaignPage ?? 0) + 1;
+            await GetCampaigns(nextCampaignsPage);
         }
 
         public async Task ExecuteFetchCampaignsCommand()
+        {
+            Campaigns.Clear();
+            var firstPage = 0;
+            await GetCampaigns(firstPage);
+        }
+
+        private async Task GetCampaigns(int pageNumber)
         {
             if (IsBusy)
                 return;
 
             IsBusy = true;
+            var campaignServiceResponse = await _campaignService.FetchCampaignsAsync(pageNumber);
 
-            try
-            {
-                Campaigns.Clear();
-                var campaigns = await _campaignService.GetCampaignsAsync();
-                foreach (var campaign in campaigns)
-                {
-                    Campaigns.Add(campaign);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            if (!campaignServiceResponse.IsSuccessResult)
+                OnFetchCampaignFailed(campaignServiceResponse.ErrorValue);
+
+            OnFetchCampaignSuccess(campaignServiceResponse.SuccessValue.Items, campaignServiceResponse.SuccessValue.CurrentPage, campaignServiceResponse.SuccessValue.PagesCount);
+            IsBusy = false;
+        }
+
+        private void OnFetchCampaignFailed(string msg)
+        {
+            Application.Current.MainPage.DisplayAlert("", msg, "OK");
+        }
+
+        private void OnFetchCampaignSuccess(IList<Campaign> campaigns, int pageNumber, int totalPageNumber)
+        {
+            _currentCampaignPage = pageNumber;
+            _totalPageNumber = totalPageNumber;
+            campaigns.ToList().ForEach(Campaigns.Add);
+        }
+
+        private bool HasMorePagesToShow()
+        {
+            return CurrentCampaignPageNumber < TotalPageNumber;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Doppler.Mobile.Core.Models.Dto;
 
 namespace Doppler.Mobile.Test.Mocks

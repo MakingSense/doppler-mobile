@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Doppler.Mobile.Core;
 using Doppler.Mobile.Core.Models.Dto;
 using Doppler.Mobile.Core.Networking;
 using Doppler.Mobile.Core.Services;
@@ -52,6 +53,40 @@ namespace Doppler.Mobile.Test.Services
             Assert.NotNull(loginResult.ErrorValue);
             Assert.False(loginResult.SuccessValue);
             Assert.Equal(loginFailResult, loginResult.ErrorValue);
+        }
+
+        [Fact]
+        public void Logout_ShouldReturnTrue_WhenLogoutIsSuccessful()
+        {
+            // Arrange
+            var localSettingsMock = new Mock<ILocalSettings>();
+            localSettingsMock.SetupGet(ls => ls.IsUserLoggedIn).Returns(true);
+            var dopplerAPIMock = new Mock<IDopplerAPI>();
+            IAuthenticationService authenticationService = new AuthenticationService(localSettingsMock.Object, dopplerAPIMock.Object);
+
+            // Act
+            var logoutResult = authenticationService.Logout();
+
+            // Assert
+            Assert.True(logoutResult.IsSuccessResult);
+            Assert.Null(logoutResult.ErrorValue);
+        }
+
+        [Fact]
+        public void Logout_ShouldReturnErrorMsg_WhenLogoutFailed()
+        {
+            // Arrange
+            var localSettingsMock = new Mock<ILocalSettings>();
+            localSettingsMock.SetupGet(ls => ls.IsUserLoggedIn).Returns(false);
+            var dopplerAPIMock = new Mock<IDopplerAPI>();
+            IAuthenticationService authenticationService = new AuthenticationService(localSettingsMock.Object, dopplerAPIMock.Object);
+
+            // Act
+            var logoutResult = authenticationService.Logout();
+
+            // Assert
+            Assert.False(logoutResult.IsSuccessResult);
+            Assert.Equal(CoreResources.NotUserLoggedIn, logoutResult.ErrorValue);
         }
     }
 }

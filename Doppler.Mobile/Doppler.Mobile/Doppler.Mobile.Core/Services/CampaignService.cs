@@ -19,42 +19,19 @@ namespace Doppler.Mobile.Core.Services
             _dopplerApi = dopplerApi;
         }
 
-        private int? _currentCampaignPage { get; set; }
-
-        public int CurrentCampaignPageNumber 
-        {
-            get => _currentCampaignPage ?? 0;
-        }
-
         /// <inheritdoc />
-        public async Task<IList<Campaign>> GetCampaignsAsync()
-        {
-            var firstPage = 1;
-            var campaignList = await FetchCampaignsAsync(firstPage);
-
-            return campaignList;
-        }
-
-        /// <inheritdoc />
-        public async Task<IList<Campaign>> GetMoreCampaignsAsync()
-        {
-            var nextCampaignListPage = ( _currentCampaignPage ?? 0 ) + 1;
-            var campaignList = await FetchCampaignsAsync(nextCampaignListPage);
-            return campaignList;
-        }
-
-        private async Task<IList<Campaign>> FetchCampaignsAsync(int pageNumber)
+        public async Task<Result<Page<Campaign>, string>> FetchCampaignsAsync(int pageNumber)
         {
             var accountName = GetAccountNameLoggedIn();
             if (string.IsNullOrEmpty(accountName))
-                return new List<Campaign>();
-            var fetchCampaigns = await _dopplerApi.GetCampaignsAsync(accountName, pageNumber);
-            _currentCampaignPage = pageNumber;
-            if (!fetchCampaigns.IsSuccessResult)
-                return new List<Campaign>();
+                return new Result<Page<Campaign>, string>(errorValue:CoreResources.NotUserLoggedIn);
 
-            var campaignList = fetchCampaigns.SuccessValue.Items.Select(Mapper.Mapper.ToCampaign).ToList();
-            return campaignList;
+            var fetchCampaigns = await _dopplerApi.GetCampaignsAsync(accountName, pageNumber);
+            if (!fetchCampaigns.IsSuccessResult)
+                return new Result<Page<Campaign>, string>(errorValue: fetchCampaigns.ErrorValue);
+
+            var newPage = Mapper.Mapper.ToPageCampaign(fetchCampaigns.SuccessValue);
+            return new Result<Page<Campaign>, string>(successValue: newPage);
         }
 
         private string GetAccountNameLoggedIn()
