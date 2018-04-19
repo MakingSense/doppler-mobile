@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Doppler.Mobile {
+namespace Doppler.Mobile.Core {
     using System;
     using System.Reflection;
     
@@ -16,21 +16,21 @@ namespace Doppler.Mobile {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AppResources {
+    public class CoreResources {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AppResources() {
+        internal CoreResources() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Doppler.Mobile.AppResources", typeof(AppResources).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Doppler.Mobile.Core.CoreResources", typeof(CoreResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -47,33 +47,9 @@ namespace Doppler.Mobile {
             }
         }
         
-        public static string LoginView_EmailEmpty {
+        public static string NotUserLoggedIn {
             get {
-                return ResourceManager.GetString("LoginView_EmailEmpty", resourceCulture);
-            }
-        }
-        
-        public static string LoginView_EmailInvalid {
-            get {
-                return ResourceManager.GetString("LoginView_EmailInvalid", resourceCulture);
-            }
-        }
-        
-        public static string LoginView_PasswordEmpty {
-            get {
-                return ResourceManager.GetString("LoginView_PasswordEmpty", resourceCulture);
-            }
-        }
-        
-        public static string LoginView_ApiKeyEmpty {
-            get {
-                return ResourceManager.GetString("LoginView_ApiKeyEmpty", resourceCulture);
-            }
-        }
-        
-        public static string LoginView_InvalidCredentialsError {
-            get {
-                return ResourceManager.GetString("LoginView_InvalidCredentialsError", resourceCulture);
+                return ResourceManager.GetString("NotUserLoggedIn", resourceCulture);
             }
         }
     }

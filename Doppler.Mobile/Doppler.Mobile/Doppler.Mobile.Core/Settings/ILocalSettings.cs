@@ -1,5 +1,4 @@
-﻿using System;
-namespace Doppler.Mobile.Core.Settings
+﻿namespace Doppler.Mobile.Core.Settings
 {
     /// <summary>
     /// Handle local settings, which are stored in the device, eg.:
@@ -10,10 +9,13 @@ namespace Doppler.Mobile.Core.Settings
     public interface ILocalSettings
     {
         /// <summary> Fast access to data related to the key "IsUserLoggedIn" </summary>
-        bool IsUserLoggedIn { get; set; }
+        bool IsUserLoggedIn { get; }
 
         /// <summary> Fast access to data related to the key "AuthAccessToken" </summary>
         string AuthAccessToken { get; set; }
+
+        /// <summary> Fast access to data related to the key "AccountNameLoggedIn" </summary>
+        string AccountNameLoggedIn { get; set; }
 
         /// <summary> Add or update a key with a new value </summary>
         /// <param name="key"> The key is used to refer to an element </param>

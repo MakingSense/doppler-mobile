@@ -12,19 +12,7 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="LoginView_EmailEmpty">
-        <value>The email is required</value>
-    </data>
-    <data name="LoginView_EmailInvalid">
-        <value>Please enter a valid email</value>
-    </data>
-    <data name="LoginView_PasswordEmpty">
-        <value>The password is required</value>
-    </data>
-    <data name="LoginView_ApiKeyEmpty">
-        <value>The api key is required</value>
-    </data>
-    <data name="LoginView_InvalidCredentialsError">
-        <value>Invalid username or password</value>
+    <data name="NotUserLoggedIn">
+        <value>There is not an user logged in.</value>
     </data>
 </root>

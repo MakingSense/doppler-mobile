@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Doppler.Mobile.Core.Configuration;
 using Doppler.Mobile.Core.Models.Dto;
@@ -11,16 +12,16 @@ namespace Doppler.Mobile.Core.Networking
     public class DopplerAPI : IDopplerAPI
     {
         private readonly IConfigurationSettings _configuration;
-        private readonly ILocalSettings _settings;
+        private readonly ILocalSettings _localSettings;
 
-        public DopplerAPI(IConfigurationSettings configuration, ILocalSettings settings)
+        public DopplerAPI(IConfigurationSettings configuration, ILocalSettings localSettings)
         {
             _configuration = configuration;
-            _settings = settings;
+            _localSettings = localSettings;
         }
 
         /// <inheritdoc />
-        public async Task<Result<bool, string>> LoginAsync(string username, string password)
+        public async Task<Result<UserAuthenticationResponseDto, string>> LoginAsync(string username, string password, string apiKey)
         {
             var userAuthentication = new UserAuthenticationDto
             {
@@ -33,30 +34,59 @@ namespace Doppler.Mobile.Core.Networking
             try
             {
                 var user = await url.PostJsonAsync(userAuthentication).ReceiveJson<UserAuthenticationResponseDto>();
-                SaveToken(user.AccessToken);
-                return new Result<bool, string>(true);
+
+                return new Result<UserAuthenticationResponseDto, string>(user);
             }
             catch (FlurlHttpException ex)
             {
                 try
                 {
                     var dopplerError = await ex.GetResponseJsonAsync<DopplerErrorDto>();
-                    return new Result<bool, string>(dopplerError.Detail);
+                    return new Result<UserAuthenticationResponseDto, string>(dopplerError.Detail);
                 }
                 catch
                 {
-                    return new Result<bool, string>(ex.Message);
+                    return new Result<UserAuthenticationResponseDto, string>(ex.Message);
                 }
             }
             catch (Exception ex)
             {
-                return new Result<bool, string>(ex.Message);
+                return new Result<UserAuthenticationResponseDto, string>(ex.Message);
             }
         }
 
-        private void SaveToken(string token)
+        /// <inheritdoc />
+        public async Task<Result<PageDto<CampaignDto>, string>> GetCampaignsAsync(string accountName, int pageNumber)
         {
-            //TODO: save token on device
+            var url = _configuration.ApiBaseUrl + $"accounts/{accountName}/campaigns?page={pageNumber}";
+            var token = GetAccessToken();
+            try
+            {
+                var page = await url.WithHeader("Authorization", $"token {token}").GetAsync().ReceiveJson<PageDto<CampaignDto>>();
+
+                return new Result<PageDto<CampaignDto>, string>(page);
+            }
+            catch (FlurlHttpException ex)
+            {
+                try
+                {
+                    var dopplerError = await ex.GetResponseJsonAsync<DopplerErrorDto>();
+                    return new Result<PageDto<CampaignDto>, string>(dopplerError.Detail);
+                }
+                catch
+                {
+                    return new Result<PageDto<CampaignDto>, string>(ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result<PageDto<CampaignDto>, string>(ex.Message);
+            }
+        }
+
+        private string GetAccessToken()
+        {
+            return _localSettings.AuthAccessToken;
         }
     }
 }

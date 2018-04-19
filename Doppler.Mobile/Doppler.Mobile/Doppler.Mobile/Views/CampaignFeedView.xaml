@@ -3,24 +3,44 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:w="clr-namespace:Doppler.Mobile.Views;assembly=Doppler.Mobile"
+    xmlns:behavior="clr-namespace:Doppler.Mobile.Behaviors;assembly=Doppler.Mobile"
+    xmlns:converter="clr-namespace:Doppler.Mobile.Converters;assembly=Doppler.Mobile"
     x:Class="Doppler.Mobile.Views.CampaignFeedView"
     x:TypeArguments="viewModel:CampaignFeedViewModel"
     xmlns:viewModel="clr-namespace:Doppler.Mobile.ViewModels"
     Title="Campaigns"
     >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ItemVisibilityEventArgstemConverter
+                x:Key="ItemVisibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Logout" Command="{Binding LogoutCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
        <StackLayout>
-            <ListView x:Name="ItemsListView" ItemsSource="{Binding Campaigns}" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadCampaignsCommand}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement">
+            <ListView x:Name="CampaignListView"
+                    ItemsSource="{Binding Campaigns}"
+                    VerticalOptions="FillAndExpand"
+                    HasUnevenRows="true"
+                    RefreshCommand="{Binding LoadCampaignsCommand}"
+                    IsPullToRefreshEnabled="true"
+                    IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                    CachingStrategy="RecycleElement">
+                <ListView.Behaviors>
+                    <behavior:ListViewPagningBehavior
+                        Command="{Binding LoadMoreCampaignsCommand}"
+                        Converter="{StaticResource ItemVisibilityConverter}">
+                    </behavior:ListViewPagningBehavior>
+                </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Padding="10">
-                                <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" TextColor="#302100" FontSize="24"/>
-                                <Label Text="{Binding CampaignId}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" TextColor="#838370" FontSize="16"/>
-                                <Label Text="{Binding FromName}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="16"/>
+                            <StackLayout Padding="8">
+                                <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" TextColor="#302100" FontSize="18"/>
+                                <Label Text="{Binding CampaignId}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" TextColor="#838370" FontSize="12"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

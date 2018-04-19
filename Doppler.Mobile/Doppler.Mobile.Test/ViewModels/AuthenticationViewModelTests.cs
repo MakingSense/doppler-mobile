@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Doppler.Mobile.Core.Networking;
 using Doppler.Mobile.Core.Services;
-using Doppler.Mobile.Core.Settings;
 using Doppler.Mobile.Navigation;
 using Doppler.Mobile.ViewModels;
 using Moq;
@@ -63,17 +61,35 @@ namespace Doppler.Mobile.Test.ViewModels
         }
 
         [Fact]
+        public async Task LoginAsync_ShouldShowApiKeyError_WhenApiKeyIsEmpty()
+        {
+            // Arrange
+            var authServiceMock = new Mock<IAuthenticationService>();
+            var navigationServiceMock = new Mock<INavigationService>();
+            var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
+            authenticationViewModel.Email = "email@Test.com";
+            authenticationViewModel.Password = "password";
+            // Act
+            authenticationViewModel.LoginAsync();
+
+            // Assert
+            Assert.Equal(AppResources.LoginView_ApiKeyEmpty, authenticationViewModel.Message);
+            Assert.True(string.IsNullOrEmpty(authenticationViewModel.ApiKey));
+        }
+
+        [Fact]
         public async Task LoginAsync_ShouldShowCredentialInvalid_WhenServerLoginFailed()
         {
             // Arrange
             var authServiceMock = new Mock<IAuthenticationService>();
             authServiceMock
-                .Setup(auth => auth.LoginAsync(It.IsAny<String>(), It.IsAny<String>()))
+                .Setup(auth => auth.LoginAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<bool, string>(errorValue: "errorMsg"));
             var navigationServiceMock = new Mock<INavigationService>();
             var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
             authenticationViewModel.Email = "test@Email.com";
             authenticationViewModel.Password = "Password";
+            authenticationViewModel.ApiKey = "ApiKey";
 
             // Act
             authenticationViewModel.LoginAsync();
@@ -82,6 +98,7 @@ namespace Doppler.Mobile.Test.ViewModels
             Assert.Equal(AppResources.LoginView_InvalidCredentialsError, authenticationViewModel.Message);
             Assert.False(string.IsNullOrEmpty(authenticationViewModel.Password));
             Assert.False(string.IsNullOrEmpty(authenticationViewModel.Email));
+            Assert.False(string.IsNullOrEmpty(authenticationViewModel.ApiKey));
         }
 
         [Fact]
@@ -90,12 +107,13 @@ namespace Doppler.Mobile.Test.ViewModels
             // Arrange
             var authServiceMock = new Mock<IAuthenticationService>();
             authServiceMock
-                .Setup(auth => auth.LoginAsync(It.IsAny<String>(), It.IsAny<String>()))
+                .Setup(auth => auth.LoginAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<bool, string>(true));
             var navigationServiceMock = new Mock<INavigationService>();
             var authenticationViewModel = new AuthenticationViewModel(authServiceMock.Object, navigationServiceMock.Object);
             authenticationViewModel.Email = "test@Email.com";
             authenticationViewModel.Password = "Password";
+            authenticationViewModel.ApiKey= "ApiKey";
 
             // Act
             authenticationViewModel.LoginAsync();
@@ -103,6 +121,7 @@ namespace Doppler.Mobile.Test.ViewModels
             // Assert
             Assert.True(string.IsNullOrEmpty(authenticationViewModel.Message));
             Assert.False(string.IsNullOrEmpty(authenticationViewModel.Password));
+            Assert.False(string.IsNullOrEmpty(authenticationViewModel.ApiKey));
             Assert.False(string.IsNullOrEmpty(authenticationViewModel.Email));
         }
     }

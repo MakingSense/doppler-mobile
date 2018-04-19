@@ -30,6 +30,7 @@ namespace Doppler.Mobile.DI
 
             // Services
             cb.RegisterType<AuthenticationService>().As<IAuthenticationService>();
+            cb.RegisterType<CampaignService>().As<ICampaignService>();
 
             cb.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
 
