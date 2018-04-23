@@ -2,9 +2,9 @@
 
 namespace Doppler.Mobile.Views
 {
-    public partial class CampaignReceipientsInfoView : ContentView
+    public partial class CampaignRecipientsInfoView : ContentView
     {
-        public CampaignReceipientsInfoView()
+        public CampaignRecipientsInfoView()
         {
             InitializeComponent();
         }
