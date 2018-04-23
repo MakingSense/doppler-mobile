@@ -55,7 +55,10 @@
       <DependentUpon>TwoFieldsView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\CampaignReceipientsInfoView.xaml.cs">
-      <DependentUpon>CampaignReceipientsInfoView.xaml</DependentUpon>
+      <DependentUpon>CampaignRecipientsInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\CampaignRecipientsInfoView.xaml.cs">
+      <DependentUpon>CampaignRecipientsInfoView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

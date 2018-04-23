@@ -6,16 +6,16 @@ namespace Doppler.Mobile.ViewModels
     public class CampaignDetailViewModel : BaseViewModel
     {
         private readonly CampaignBasicInfoViewModel _campaignBasicInfoViewModel;
-        private readonly CampaignReceipientsInfoViewModel _campaignReceipientsInfoViewModel;
+        private readonly CampaignRecipientsInfoViewModel _campaignRecipientsInfoViewModel;
         private readonly CampaignSendingInfoViewModel _campaignSendingInfoViewModel;
 
         public CampaignDetailViewModel(CampaignBasicInfoViewModel campaignBasicInfoViewModel,
-                                       CampaignReceipientsInfoViewModel campaignReceipientsInfoViewModel,
+                                       CampaignRecipientsInfoViewModel campaignRecipientsInfoViewModel,
                                        CampaignSendingInfoViewModel campaignSendingInfoViewModel)
         {
             PreviewCommand = new Command(async () => await ExecutePreviewCommand());
             _campaignBasicInfoViewModel = campaignBasicInfoViewModel;
-            _campaignReceipientsInfoViewModel = campaignReceipientsInfoViewModel;
+            _campaignRecipientsInfoViewModel = campaignRecipientsInfoViewModel;
             _campaignSendingInfoViewModel = campaignSendingInfoViewModel;
             CampaignName = "Mock Campaign";
             CampaignType = "Classic Campaign";
@@ -26,9 +26,9 @@ namespace Doppler.Mobile.ViewModels
             get => _campaignBasicInfoViewModel;
         }
 
-        public CampaignReceipientsInfoViewModel CampaignReceipientsInfoViewModel
+        public CampaignRecipientsInfoViewModel CampaignRecipientsInfoViewModel
         {
-            get => _campaignReceipientsInfoViewModel;
+            get => _campaignRecipientsInfoViewModel;
         }
 
         public CampaignSendingInfoViewModel CampaignSendingInfoViewModel

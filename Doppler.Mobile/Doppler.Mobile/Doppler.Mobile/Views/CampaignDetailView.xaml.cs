@@ -8,7 +8,7 @@ namespace Doppler.Mobile.Views
         {
             InitializeComponent();
             campaignBasicInfoView.BindingContext = ViewModel.CampaignBasicInfoViewModel;
-            campaignReceipientsInfoView.BindingContext = ViewModel.CampaignReceipientsInfoViewModel;
+            campaignRecipientsInfoView.BindingContext = ViewModel.CampaignRecipientsInfoViewModel;
             campaignSendingInfoView.BindingContext = ViewModel.CampaignSendingInfoViewModel;
         }
     }

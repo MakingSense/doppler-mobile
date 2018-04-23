@@ -39,7 +39,7 @@ namespace Doppler.Mobile.DI
             cb.RegisterType<CampaignFeedViewModel>();
             cb.RegisterType<CampaignDetailViewModel>();
             cb.RegisterType<CampaignBasicInfoViewModel>();
-            cb.RegisterType<CampaignReceipientsInfoViewModel>();
+            cb.RegisterType<CampaignRecipientsInfoViewModel>();
             cb.RegisterType<CampaignSendingInfoViewModel>();
         }
     }

@@ -6,9 +6,9 @@ using Doppler.Mobile.Core.Models;
 
 namespace Doppler.Mobile.ViewModels
 {
-    public class CampaignReceipientsInfoViewModel : BaseViewModel
+    public class CampaignRecipientsInfoViewModel : BaseViewModel
     {
-        public CampaignReceipientsInfoViewModel()
+        public CampaignRecipientsInfoViewModel()
         {
             ListOfSubscribers = new ObservableCollection<SubscriberList>();
             var listMock = CreateListOfSubscribersMock();
