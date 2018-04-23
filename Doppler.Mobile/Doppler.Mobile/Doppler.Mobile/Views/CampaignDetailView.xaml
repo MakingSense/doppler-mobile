@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<w:ViewPage NavigationPage.HasNavigationBar="true"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:w="clr-namespace:Doppler.Mobile.Views;assembly=Doppler.Mobile"
+    xmlns:controls="clr-namespace:SegmentedControl.FormsPlugin.Abstractions;assembly=SegmentedControl.FormsPlugin.Abstractions"
+    x:Class="Doppler.Mobile.Views.CampaignDetailView"
+    x:TypeArguments="viewModel:CampaignDetailViewModel"
+    xmlns:viewModel="clr-namespace:Doppler.Mobile.ViewModels"
+    Title="Campaign Detail"
+    >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Preview" Command="{Binding PreviewCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0">
+                <Grid x:Name="HeaderLayoutRoot"
+                      BackgroundColor="#FCE579"
+                      Padding="14,0,14,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+                    <Label Grid.Row="0"
+                           Text="{Binding CampaignName}"
+                           VerticalTextAlignment="End"
+                           FontSize="22"
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Label Grid.Row="1"
+                           Text="{Binding CampaignType}"
+                           VerticalTextAlignment="Start"
+                           FontSize="19"
+                           TextColor="Black"/>
+                </Grid>
+            </StackLayout>
+            <StackLayout Grid.Row="1">
+                <StackLayout Padding="14,-4,14,0">
+                    <controls:SegmentedControl TintColor="#19AD63" SelectedSegment="{Binding TabSelected, Mode=TwoWay}">
+                        <controls:SegmentedControl.Children>
+                            <controls:SegmentedControlOption Text="BASIC INFO" />
+                            <controls:SegmentedControlOption Text="RECIPIENTS" />
+                            <controls:SegmentedControlOption Text="SENDING" />
+                        </controls:SegmentedControl.Children>
+                    </controls:SegmentedControl>
+                </StackLayout>
+                <StackLayout>
+                    <StackLayout IsVisible="{Binding IsTabOneVisible}" >
+                        <w:CampaignBasicInfoView x:Name="campaignBasicInfoView"/>
+                    </StackLayout>
+                    <StackLayout  IsVisible="{Binding IsTabTwoVisible}">
+                        <w:CampaignReceipientsInfoView x:Name="campaignReceipientsInfoView" />
+                    </StackLayout>
+                    <StackLayout  IsVisible="{Binding IsTabThreeVisible}">
+                        <w:CampaignSendingInfoView x:Name="campaignSendingInfoView" />
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</w:ViewPage>

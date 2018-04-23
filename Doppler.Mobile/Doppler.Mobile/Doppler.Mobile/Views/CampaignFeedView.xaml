@@ -28,7 +28,8 @@
                     RefreshCommand="{Binding LoadCampaignsCommand}"
                     IsPullToRefreshEnabled="true"
                     IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-                    CachingStrategy="RecycleElement">
+                    CachingStrategy="RecycleElement"
+                    SelectedItem="{Binding CampaignSelected, Mode=TwoWay}" >
                 <ListView.Behaviors>
                     <behavior:ListViewPagningBehavior
                         Command="{Binding LoadMoreCampaignsCommand}"

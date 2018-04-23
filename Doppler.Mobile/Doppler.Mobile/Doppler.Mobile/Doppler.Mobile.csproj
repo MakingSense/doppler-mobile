@@ -8,6 +8,7 @@
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="SegmentedControl.FormsPlugin" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +51,12 @@
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\CustomNavigationView.xaml.cs">
       <DependentUpon>CustomNavigationView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="CustomViews\TwoFieldsView.xaml.cs">
+      <DependentUpon>TwoFieldsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\CampaignReceipientsInfoView.xaml.cs">
+      <DependentUpon>CampaignReceipientsInfoView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +66,7 @@
     <Folder Include="Navigation\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Converters\" />
+    <Folder Include="CustomViews\" />
   </ItemGroup>
 
   <ItemGroup>

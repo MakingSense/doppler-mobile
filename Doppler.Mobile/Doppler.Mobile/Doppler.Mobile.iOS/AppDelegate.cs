@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using SegmentedControl.FormsPlugin.iOS;
 using UIKit;
 
 namespace Doppler.Mobile.iOS
@@ -24,7 +25,7 @@ namespace Doppler.Mobile.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-
+            SegmentedControlRenderer.Init();
             return base.FinishedLaunching(app, options);
         }
     }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Doppler.Mobile.CustomViews.TwoFieldsView">
+    <ContentView.Content>
+        <StackLayout>
+            <Label x:Name="name"
+               Text=""
+               FontSize="17"
+               TextColor="Black"
+               FontAttributes="Bold"/>
+            <Label x:Name="value"
+               Text="" 
+               FontSize="14"
+               TextColor="#838370"/>
+            <BoxView HeightRequest="1" BackgroundColor="#979797" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

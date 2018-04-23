@@ -35,9 +35,12 @@ namespace Doppler.Mobile.DI
             cb.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
 
             // View Models
-            cb.RegisterType<CampaignFeedViewModel>();
             cb.RegisterType<AuthenticationViewModel>();
-
+            cb.RegisterType<CampaignFeedViewModel>();
+            cb.RegisterType<CampaignDetailViewModel>();
+            cb.RegisterType<CampaignBasicInfoViewModel>();
+            cb.RegisterType<CampaignReceipientsInfoViewModel>();
+            cb.RegisterType<CampaignSendingInfoViewModel>();
         }
     }
 }
