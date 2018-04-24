@@ -37,6 +37,8 @@ namespace Doppler.Mobile.ViewModels
 
         public Command LogoutCommand { get; set; }
 
+        public Command RowSelectedCommand { get; set; }
+
         private int? _currentCampaignPage { get; set; }
 
         public int CurrentCampaignPageNumber
@@ -49,6 +51,22 @@ namespace Doppler.Mobile.ViewModels
         public int TotalPageNumber
         {
             get => _totalPageNumber ?? int.MaxValue;
+        }
+
+        private Campaign _campaignSelected;
+
+        public Campaign CampaignSelected
+        {
+            get => null;
+
+            set
+            {
+                if (value != null)
+                {
+                    SetProperty(ref _campaignSelected, value);
+                    NavigateToCampaignDetail(_campaignSelected);
+                }
+            }
         }
 
         public override async Task InitializeAsync(object navigationData)
@@ -75,15 +93,20 @@ namespace Doppler.Mobile.ViewModels
 
         public async void ExecuteFetchMoreCampaignsCommand(Campaign item)
         {
-            var nextCampaignsPage = (_currentCampaignPage ?? 0) + 1;
+            var nextCampaignsPage = CurrentCampaignPageNumber + 1;
             await GetCampaigns(nextCampaignsPage);
         }
 
         public async Task ExecuteFetchCampaignsCommand()
         {
             Campaigns.Clear();
-            var firstPage = 0;
+            var firstPage = 1;
             await GetCampaigns(firstPage);
+        }
+
+        private async Task NavigateToCampaignDetail(Campaign campaignSelected)
+        {
+            _navigationService.NavigateToAsync<CampaignDetailViewModel>();
         }
 
         private async Task GetCampaigns(int pageNumber)

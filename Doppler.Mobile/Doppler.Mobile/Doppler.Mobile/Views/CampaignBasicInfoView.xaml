@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:custom="clr-namespace:Doppler.Mobile.CustomViews"
+             x:Class="Doppler.Mobile.Views.CampaignBasicInfoView">
+    <ContentView.Content>
+        <ScrollView>
+            <StackLayout MinimumHeightRequest="300">
+                <custom:TwoFieldsView x:Name="CampaignName"
+                                      Padding="8"
+                                      NameText="CAMPAIGN NAME"
+                                      ValueText="{Binding Name}"/>
+                <custom:TwoFieldsView x:Name="CampaignSubject"
+                                      Padding="8"
+                                      NameText="SUBJECT"
+                                      ValueText="{Binding Subject}"/>
+                <custom:TwoFieldsView x:Name="CampaignPreHeader"
+                                      Padding="8"
+                                      NameText="PREHEADER"
+                                      ValueText="{Binding Preheader}"/>
+                <custom:TwoFieldsView x:Name="CampaignFromEmail"
+                                      Padding="8"
+                                      NameText="FROM-EMAIL"
+                                      ValueText="{Binding FromEmail}"/>
+                <custom:TwoFieldsView x:Name="CampaignFromName"
+                                      Padding="8"
+                                      NameText="FROM-NAME"
+                                      ValueText="{Binding FromName}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>

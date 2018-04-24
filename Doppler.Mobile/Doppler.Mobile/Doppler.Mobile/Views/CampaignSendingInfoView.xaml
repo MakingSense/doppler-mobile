@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:custom="clr-namespace:Doppler.Mobile.CustomViews"
+             x:Class="Doppler.Mobile.Views.CampaignSendingInfoView">
+    <ContentView.Content>
+        <ScrollView>
+            <StackLayout MinimumHeightRequest="200">
+                <custom:TwoFieldsView x:Name="SendingDate"
+                                      Padding="8"
+                                      NameText="DATE"
+                                      ValueText="{Binding Date}"/>
+                <custom:TwoFieldsView x:Name="SendingHour"
+                                      Padding="8"
+                                      NameText="HOUR"
+                                      ValueText="{Binding Hour}"/>
+                <custom:TwoFieldsView x:Name="SendingConfirmationEmail"
+                                      Padding="8"
+                                      NameText="CONFIRMATION EMAIL"
+                                      ValueText="{Binding ConfirmationEmail}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>
