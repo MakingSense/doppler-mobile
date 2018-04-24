@@ -36,5 +36,15 @@ namespace Doppler.Mobile.Core.Mapper
                 PagesCount = dto.PagesCount
             };
         }
+
+        public static CampaignRecipient ToCampaignRecipient(CampaignRecipientDto dto)
+        {
+            return new CampaignRecipient
+            {
+                Name = dto.Name,
+                ListId = dto.ListId,
+                SubscribersCount = dto.SubscribersCount
+            };
+        }
     }
 }

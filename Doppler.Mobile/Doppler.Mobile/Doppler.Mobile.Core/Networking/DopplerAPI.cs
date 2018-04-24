@@ -84,6 +84,35 @@ namespace Doppler.Mobile.Core.Networking
             }
         }
 
+        /// <inheritdoc />
+        public async Task<Result<CampaignRecipientListDto, string>> GetCampaignRecipientsAsync(string accountName, int campaignId)
+        {
+            var url = _configuration.ApiBaseUrl + $"accounts/{accountName}/campaigns/{campaignId}/recipients";
+            var token = GetAccessToken();
+            try
+            {
+                var campaignRecipients = await url.WithHeader("Authorization", $"token {token}").GetAsync().ReceiveJson<CampaignRecipientListDto>();
+
+                return new Result<CampaignRecipientListDto, string>(campaignRecipients);
+            }
+            catch (FlurlHttpException ex)
+            {
+                try
+                {
+                    var dopplerError = await ex.GetResponseJsonAsync<DopplerErrorDto>();
+                    return new Result<CampaignRecipientListDto, string>(dopplerError.Detail);
+                }
+                catch
+                {
+                    return new Result<CampaignRecipientListDto, string>(ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result<CampaignRecipientListDto, string>(ex.Message);
+            }
+        }
+
         private string GetAccessToken()
         {
             return _localSettings.AuthAccessToken;

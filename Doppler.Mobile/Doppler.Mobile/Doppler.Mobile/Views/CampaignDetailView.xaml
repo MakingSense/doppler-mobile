@@ -22,7 +22,7 @@
                 <Grid x:Name="HeaderLayoutRoot"
                       BackgroundColor="#FCE579"
                       Padding="14,0,14,0"
-                      HeightRequest="120">
+                      HeightRequest="100">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5*"/>
                     <RowDefinition Height="5*"/>
@@ -30,13 +30,13 @@
                     <Label Grid.Row="0"
                            Text="{Binding CampaignName}"
                            VerticalTextAlignment="End"
-                           FontSize="22"
+                           FontSize="20"
                            TextColor="Black"
                            FontAttributes="Bold"/>
                     <Label Grid.Row="1"
                            Text="{Binding CampaignType}"
                            VerticalTextAlignment="Start"
-                           FontSize="19"
+                           FontSize="18"
                            TextColor="Black"/>
                 </Grid>
             </StackLayout>

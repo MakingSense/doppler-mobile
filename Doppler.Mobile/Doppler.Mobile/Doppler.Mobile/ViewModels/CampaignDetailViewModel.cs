@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Doppler.Mobile.Navigation;
 using Xamarin.Forms;
 
 namespace Doppler.Mobile.ViewModels
@@ -8,17 +9,18 @@ namespace Doppler.Mobile.ViewModels
         private readonly CampaignBasicInfoViewModel _campaignBasicInfoViewModel;
         private readonly CampaignRecipientsInfoViewModel _campaignRecipientsInfoViewModel;
         private readonly CampaignSendingInfoViewModel _campaignSendingInfoViewModel;
+        private readonly INavigationService _navigationService;
 
         public CampaignDetailViewModel(CampaignBasicInfoViewModel campaignBasicInfoViewModel,
                                        CampaignRecipientsInfoViewModel campaignRecipientsInfoViewModel,
-                                       CampaignSendingInfoViewModel campaignSendingInfoViewModel)
+                                       CampaignSendingInfoViewModel campaignSendingInfoViewModel,
+                                       INavigationService navigationService)
         {
             PreviewCommand = new Command(async () => await ExecutePreviewCommand());
             _campaignBasicInfoViewModel = campaignBasicInfoViewModel;
             _campaignRecipientsInfoViewModel = campaignRecipientsInfoViewModel;
             _campaignSendingInfoViewModel = campaignSendingInfoViewModel;
-            CampaignName = "Mock Campaign";
-            CampaignType = "Classic Campaign";
+            _navigationService = navigationService;
         }
 
         public CampaignBasicInfoViewModel CampaignBasicInfoViewModel
@@ -81,13 +83,20 @@ namespace Doppler.Mobile.ViewModels
 
         public Command PreviewCommand { get; set; }
 
-        public override async Task InitializeAsync(object navigationData)
-        {
-        }
-
         public async Task ExecutePreviewCommand()
         {
             //TODO: - do something to show the preview
+        }
+
+        public override async Task InitializeAsync(object navigationData)
+        {
+            var currentCampaign = _navigationService.CurrentCampaign;
+            if (currentCampaign != null)
+            {
+                CampaignName = currentCampaign.Name;
+                CampaignType = currentCampaign.Status;
+            }
+
         }
     }
 }

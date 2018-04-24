@@ -1,37 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Doppler.Mobile.Core.Models;
+using Doppler.Mobile.Core.Services;
+using Doppler.Mobile.Navigation;
+using Xamarin.Forms;
 
 namespace Doppler.Mobile.ViewModels
 {
     public class CampaignRecipientsInfoViewModel : BaseViewModel
     {
-        public CampaignRecipientsInfoViewModel()
+        private readonly INavigationService _navigationService;
+        private readonly ICampaignRecipientService _campaignRecipientService;
+
+        public CampaignRecipientsInfoViewModel(ICampaignRecipientService campaignRecipientService, INavigationService navigationService)
         {
-            ListOfSubscribers = new ObservableCollection<SubscriberList>();
-            var listMock = CreateListOfSubscribersMock();
-            listMock.ToList().ForEach(ListOfSubscribers.Add);
+            ListOfCampaignRecipient = new ObservableCollection<CampaignRecipient>();
+            _navigationService = navigationService;
+            _campaignRecipientService = campaignRecipientService;
+            InitializeAsync();
         }
 
-        public ObservableCollection<SubscriberList> ListOfSubscribers { get; set; }
+        public ObservableCollection<CampaignRecipient> ListOfCampaignRecipient { get; set; }
 
-        private List<SubscriberList> CreateListOfSubscribersMock()
+        private async void InitializeAsync()
         {
-            var list1 = new SubscriberList
+            var currentCampaign = _navigationService.CurrentCampaign;
+            if (currentCampaign != null)
             {
-                Name = "Graphic Designers",
-                NumberOfSubscribers = 230
-            };
+                await GetCampaignRecipients(currentCampaign.CampaignId);
+            }
+        }
 
-            var list2 = new SubscriberList
-            {
-                Name = "Doctors",
-                NumberOfSubscribers = 5530
-            };
+        private async Task GetCampaignRecipients(int campaignId)
+        {
+            if (IsBusy)
+                return;
 
-            return new List<SubscriberList> { list1, list2 };
+            IsBusy = true;
+            var campaignRecipientServiceResponse = await _campaignRecipientService.FetchCampaignRecipientsAsync(campaignId);
+
+            if (!campaignRecipientServiceResponse.IsSuccessResult)
+                OnFetchCampaignRecipientFailed(campaignRecipientServiceResponse.ErrorValue);
+
+            OnFetchCampaignRecipientSuccess(campaignRecipientServiceResponse.SuccessValue);
+            IsBusy = false;
+        }
+
+        private void OnFetchCampaignRecipientFailed(string msg)
+        {
+            Application.Current.MainPage.DisplayAlert("", msg, "OK");
+        }
+
+        private void OnFetchCampaignRecipientSuccess(IList<CampaignRecipient> campaignRecipients)
+        {
+            campaignRecipients.ToList().ForEach(ListOfCampaignRecipient.Add);
         }
     }
 }

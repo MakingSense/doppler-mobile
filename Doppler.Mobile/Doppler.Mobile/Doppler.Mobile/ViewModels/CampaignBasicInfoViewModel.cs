@@ -1,14 +1,16 @@
-﻿namespace Doppler.Mobile.ViewModels
+﻿using System.Threading.Tasks;
+using Doppler.Mobile.Navigation;
+
+namespace Doppler.Mobile.ViewModels
 {
     public class CampaignBasicInfoViewModel : BaseViewModel
     {
-        public CampaignBasicInfoViewModel()
+        private readonly INavigationService _navigationService;
+
+        public CampaignBasicInfoViewModel(INavigationService navigationService)
         {
-            Name = "February Newsletter";
-            Subject = "March comes with surprises";
-            Preheader = "Lorem";
-            FromName = "John Doe";
-            FromEmail = "Test@Mock.com";
+            _navigationService = navigationService;
+            Initialize();
         }
 
         public string Name { get; set; }
@@ -20,5 +22,18 @@
         public string FromName { get; set; }
 
         public string FromEmail { get; set; }
+
+        private void Initialize()
+        {
+            var currentCampaign = _navigationService.CurrentCampaign;
+            if (currentCampaign != null)
+            {
+                Name = currentCampaign.Name;
+                Subject = currentCampaign.Subject;
+                Preheader = currentCampaign.Preheader;
+                FromName = currentCampaign.FromName;
+                FromEmail = currentCampaign.FromEmail;
+            }
+        }
     }
 }

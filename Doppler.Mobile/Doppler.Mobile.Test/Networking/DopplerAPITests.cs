@@ -157,5 +157,63 @@ namespace Doppler.Mobile.Test.Networking
                 Assert.StartsWith(errorMsg, getCampaignsResult.ErrorValue);
             }
         }
+
+        [Fact]
+        public async Task GetCampaignRecipientsAsync_ShouldReturnPage_WhenConnectionIsSuccessful()
+        {
+            // Arrange
+            var localSettingsMock = new Mock<ILocalSettings>();
+            var configurationSettings = new ConfigurationSettingsDouble
+            {
+                ApiBaseUrl = "https://yahoo.com"
+            };
+
+            using (var httpTest = new HttpTest())
+            {
+                var getCampaignRecipientsResponse = Mocks.Mocks.GetCampaignRecipientListDto();
+
+                httpTest.RespondWithJson(getCampaignRecipientsResponse);
+
+                IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
+
+                // Act
+                var getCampaignRecipientsResult = await dopplerAPI.GetCampaignRecipientsAsync("Test@email.com", 1);
+
+                // Assert
+                Assert.True(getCampaignRecipientsResult.IsSuccessResult);
+                Assert.Null(getCampaignRecipientsResult.ErrorValue);
+                Assert.NotNull(getCampaignRecipientsResult.SuccessValue);
+                Assert.Equal(getCampaignRecipientsResponse.Items.Count, getCampaignRecipientsResult.SuccessValue.Items.Count);
+                Assert.Equal(getCampaignRecipientsResponse.Items[0].ListId, getCampaignRecipientsResult.SuccessValue.Items[0].ListId);
+            }
+        }
+
+        [Fact]
+        public async Task GetCampaignRecipientsAsync_ShouldReturnString_WhenConnectionFailed()
+        {
+            // Arrange
+            var localSettingsMock = new Mock<ILocalSettings>();
+            var configurationSettings = new ConfigurationSettingsDouble
+            {
+                ApiBaseUrl = "https://yahoo.com"
+            };
+
+            using (var httpTest = new HttpTest())
+            {
+                var errorMsg = "Call failed with status code 500 (Internal Server Error)";
+                httpTest.RespondWith(errorMsg, 500);
+
+                IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
+
+                // Act
+                var getCampaignRecipientsResult  = await dopplerAPI.GetCampaignRecipientsAsync("TestUser@domain.com", 1);
+
+                // Assert
+                Assert.False(getCampaignRecipientsResult.IsSuccessResult);
+                Assert.NotNull(getCampaignRecipientsResult.ErrorValue);
+                Assert.Null(getCampaignRecipientsResult.SuccessValue);
+                Assert.StartsWith(errorMsg, getCampaignRecipientsResult.ErrorValue);
+            }
+        }
     }
 }

@@ -1,12 +1,17 @@
-﻿namespace Doppler.Mobile.ViewModels
+﻿using System;
+using System.Globalization;
+using Doppler.Mobile.Navigation;
+
+namespace Doppler.Mobile.ViewModels
 {
     public class CampaignSendingInfoViewModel
     {
-        public CampaignSendingInfoViewModel()
+        private readonly INavigationService _navigationService;
+
+        public CampaignSendingInfoViewModel(INavigationService navigationService)
         {
-            ConfirmationEmail = "mock@data.com";
-            Date = "08/28/2017";
-            Hour = "05:26 PM - (GMT-3) Bs As";
+            _navigationService = navigationService;
+            Initialize();
         }
 
         public string Date { get; set; }
@@ -14,5 +19,17 @@
         public string Hour { get; set; }
 
         public string ConfirmationEmail { get; set; }
+
+        private void Initialize()
+        {
+            var currentCampaign = _navigationService.CurrentCampaign;
+            if (currentCampaign != null)
+            {
+                ConfirmationEmail = currentCampaign.FromEmail;
+                var localTime = currentCampaign.ScheduledDate.LocalDateTime;
+                Hour = localTime.ToString("hh:mm tt - '(GMT'z')'");
+                Date = localTime.ToString("MM/dd/yyyy");
+            }
+        }
     }
 }

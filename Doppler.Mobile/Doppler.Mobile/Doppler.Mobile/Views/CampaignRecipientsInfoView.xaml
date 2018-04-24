@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:Doppler.Mobile.Converters;assembly=Doppler.Mobile"
              x:Class="Doppler.Mobile.Views.CampaignRecipientsInfoView">
+     <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:IntZeroToBoolConverter
+                x:Key="VisibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentView.Content>
         <StackLayout Padding="16,0,16,0">
             <Grid x:Name="LayoutRoot" >
@@ -21,7 +28,7 @@
             </Grid>
             <BoxView HeightRequest="1" BackgroundColor="#979797" />
             <ListView x:Name="SubscriberListView"
-                    ItemsSource="{Binding ListOfSubscribers}"
+                    ItemsSource="{Binding ListOfCampaignRecipient}"
                     VerticalOptions="FillAndExpand"
                     HasUnevenRows="true"
                     IsRefreshing="{Binding IsBusy, Mode=OneWay}"
@@ -31,18 +38,19 @@
                         <ViewCell>
                             <Grid x:Name="LayoutRoot" >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="9*"/>
+                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                                 <Label Text="{Binding Name}"
                                        Grid.Column="0"
                                        LineBreakMode="NoWrap"
                                        Style="{DynamicResource ListItemTextStyle}"
                                        TextColor="#302100"
-                                       FontSize="18"
+                                       FontSize="16"
                                        MinimumWidthRequest="60" />
-                                <Label Text="{Binding NumberOfSubscribers}"
+                                <Label Text="{Binding SubscribersCount}"
                                        Grid.Column="1"
+                                       IsVisible="{Binding SubscribersCount, Converter={StaticResource VisibilityConverter}}"
                                        HorizontalTextAlignment="End"
                                        LineBreakMode="NoWrap"
                                        Style="{DynamicResource ListItemTextStyle}"
