@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Doppler.Mobile.Core.Models;
@@ -17,7 +15,9 @@ namespace Doppler.Mobile.ViewModels
         private readonly IAuthenticationService _authenticationService;
         private readonly INavigationService _navigationService;
 
-        public CampaignFeedViewModel(ICampaignService campaignService, IAuthenticationService authenticationService, INavigationService navigationService)
+        public CampaignFeedViewModel(ICampaignService campaignService,
+                                     IAuthenticationService authenticationService,
+                                     INavigationService navigationService)
         {
             Title = "Campaigns";
             _campaignService = campaignService;
@@ -106,7 +106,8 @@ namespace Doppler.Mobile.ViewModels
 
         private async Task NavigateToCampaignDetail(Campaign campaignSelected)
         {
-            _navigationService.NavigateToAsync<CampaignDetailViewModel>();
+            _navigationService.CurrentCampaign = campaignSelected;
+            await _navigationService.NavigateToAsync<CampaignDetailViewModel>();
         }
 
         private async Task GetCampaigns(int pageNumber)

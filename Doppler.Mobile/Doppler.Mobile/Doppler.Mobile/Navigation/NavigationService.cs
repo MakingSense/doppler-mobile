@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
+using Doppler.Mobile.Core.Models;
 using Doppler.Mobile.Core.Settings;
 using Doppler.Mobile.ViewModels;
-using Doppler.Mobile.Views;
 using Xamarin.Forms;
 
 namespace Doppler.Mobile.Navigation
@@ -22,6 +22,8 @@ namespace Doppler.Mobile.Navigation
                 return viewModel as BaseViewModel;
             }
         }
+
+        public Campaign CurrentCampaign { get; set; }
 
         public NavigationService(ILocalSettings settingsService)
         {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Doppler.Mobile.Core.Networking;
 
 namespace Doppler.Mobile.Core.Services

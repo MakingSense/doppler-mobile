@@ -1,5 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Doppler.Mobile.Core.Models;
 using Doppler.Mobile.ViewModels;
 
 namespace Doppler.Mobile.Navigation
@@ -13,5 +13,6 @@ namespace Doppler.Mobile.Navigation
         Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel;
         Task RemoveLastFromBackStackAsync();
         Task RemoveBackStackAsync();
+        Campaign CurrentCampaign { get; set; }
     }
 }

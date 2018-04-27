@@ -19,5 +19,11 @@ namespace Doppler.Mobile.Core.Networking
         /// <param name="pageNumber"> Page number to get campaign list </param>
         /// <returns> Campagin list related to the account name if request was successful, otherwise error message </returns>
         Task<Result<PageDto<CampaignDto>, string>> GetCampaignsAsync(string accountName, int pageNumber);
+
+        /// <summary> Gets a campaign list with account name and number of page </summary>
+        /// <param name="accountName"> Account name to get campaign list </param>
+        /// <param name="campaignId"> Campaign ID represent the campaign that we want to get the recipients </param>
+        /// <returns> Campagin recipient list related to the account name and campaign ID if request was successful, otherwise error message </returns>
+        Task<Result<CampaignRecipientListDto, string>> GetCampaignRecipientsAsync(string accountName, int campaignId);
     }
 }

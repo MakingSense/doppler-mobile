@@ -51,5 +51,26 @@ namespace Doppler.Mobile.Test.Mocks
                 ExpirationDate = "Expiration Date"
             };
         }
+
+        public static CampaignRecipientDto GetCampaignRecipientsDto(int identifier)
+        {
+            return new CampaignRecipientDto
+            {
+                Name = "Campaign Recipient Name",
+                ListId = identifier,
+                SubscribersCount = 100
+            };
+        }
+
+        public static CampaignRecipientListDto GetCampaignRecipientListDto()
+        {
+            var campaignRecipients1 = GetCampaignRecipientsDto(1);
+            var campaignRecipients2 = GetCampaignRecipientsDto(2);
+
+            return new CampaignRecipientListDto
+            {
+                Items = new CampaignRecipientDto[] { campaignRecipients1, campaignRecipients2 }
+            };
+        }
     }
 }
