@@ -119,7 +119,7 @@ namespace Doppler.Mobile.Test.Networking
                 IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
 
                 // Act
-                var getCampaignsResult = await dopplerAPI.GetCampaignsAsync("Test@email.com", 1);
+                var getCampaignsResult = await dopplerAPI.GetCampaignsAsync("Test@email.com", 1, "draft");
 
                 // Assert
                 Assert.True(getCampaignsResult.IsSuccessResult);
@@ -148,7 +148,7 @@ namespace Doppler.Mobile.Test.Networking
                 IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
 
                 // Act
-                var getCampaignsResult  = await dopplerAPI.GetCampaignsAsync("TestUser@domain.com", 1);
+                var getCampaignsResult  = await dopplerAPI.GetCampaignsAsync("TestUser@domain.com", 1, "draft");
 
                 // Assert
                 Assert.False(getCampaignsResult.IsSuccessResult);

@@ -23,6 +23,9 @@ namespace Doppler.Mobile.Test.Mocks
 
         public static CampaignDto GetCampaignDto(int identifier)
         {
+            var linkDto1 = GetLinkDto(1);
+            var linkDto2 = GetLinkDto(2);
+
             return new CampaignDto
             {
                 CampaignId = identifier,
@@ -36,7 +39,18 @@ namespace Doppler.Mobile.Test.Mocks
                 Preheader = $"Preheader-{identifier}",
                 ReplyTo = $"ReplyTo-{identifier}",
                 TextCampaign = true,
-                Status = $"Status-{identifier}"
+                Status = $"Status-{identifier}",
+                Links = new LinkDto[] { linkDto1, linkDto2 }
+            };
+        }
+
+        public static LinkDto GetLinkDto(int identifier)
+        {
+            return new LinkDto
+            {
+                HyperlinkRef = $"Hyper Reft {identifier}",
+                Relation = $"Relation {identifier}",
+                Description = $"Description {identifier}"
             };
         }
 

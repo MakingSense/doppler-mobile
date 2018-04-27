@@ -22,12 +22,12 @@ namespace Doppler.Mobile.Test.Services
             localSettingsMock.SetupGet(ls => ls.AccountNameLoggedIn).Returns("UserAccount");
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
-                .Setup(dAPI => dAPI.GetCampaignsAsync(It.IsAny<string>(), It.IsAny<int>()))
+                .Setup(dAPI => dAPI.GetCampaignsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<PageDto<CampaignDto>, string>(successValue: pageToRet));
             ICampaignService campaignService = new CampaignService(localSettingsMock.Object, dopplerAPIMock.Object);
 
             // Act
-            var getCampaignsResult = await campaignService.FetchCampaignsAsync(1);
+            var getCampaignsResult = await campaignService.FetchCampaignsAsync(1, "draft");
 
             // Assert
             Assert.NotNull(getCampaignsResult.SuccessValue);
@@ -44,12 +44,12 @@ namespace Doppler.Mobile.Test.Services
             var localSettingsMock = new Mock<ILocalSettings>();
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
-                .Setup(dAPI => dAPI.GetCampaignsAsync(It.IsAny<string>(), It.IsAny<int>()))
+                .Setup(dAPI => dAPI.GetCampaignsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<PageDto<CampaignDto>, string>(successValue: pageToRet));
             ICampaignService campaignService = new CampaignService(localSettingsMock.Object, dopplerAPIMock.Object);
 
             // Act
-            var getCampaignsResult = await campaignService.FetchCampaignsAsync(1);
+            var getCampaignsResult = await campaignService.FetchCampaignsAsync(1, "draft");
 
             // Assert
             Assert.Null(getCampaignsResult.SuccessValue);
@@ -102,12 +102,12 @@ namespace Doppler.Mobile.Test.Services
             localSettingsMock.SetupGet(ls => ls.AccountNameLoggedIn).Returns("UserAccount");
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
-                .Setup(dAPI => dAPI.GetCampaignsAsync(It.IsAny<string>(), It.IsAny<int>()))
+                .Setup(dAPI => dAPI.GetCampaignsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<PageDto<CampaignDto>, string>(successValue: pageToRet));
             ICampaignService campaignService = new CampaignService(localSettingsMock.Object, dopplerAPIMock.Object);
 
             // Act
-            var getCampaignsResult = await campaignService.FetchCampaignsAsync(1);
+            var getCampaignsResult = await campaignService.FetchCampaignsAsync(1, "draft");
 
             // Assert
             Assert.Equal(campaignModel.CampaignId, getCampaignsResult.SuccessValue.Items[0].CampaignId);
@@ -123,12 +123,12 @@ namespace Doppler.Mobile.Test.Services
             localSettingsMock.SetupGet(ls => ls.AccountNameLoggedIn).Returns("UserAccount");
             var dopplerAPIMock = new Mock<IDopplerAPI>();
             dopplerAPIMock
-                .Setup(dAPI => dAPI.GetCampaignsAsync(It.IsAny<string>(), It.IsAny<int>()))
+                .Setup(dAPI => dAPI.GetCampaignsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<PageDto<CampaignDto>, string>(errorValue: "ERROR"));
             ICampaignService campaignService = new CampaignService(localSettingsMock.Object, dopplerAPIMock.Object);
 
             // Act
-            var getCampaignsResult = await campaignService.FetchCampaignsAsync(1);
+            var getCampaignsResult = await campaignService.FetchCampaignsAsync(1, "draft");
 
             // Assert
             Assert.NotNull(getCampaignsResult.ErrorValue);

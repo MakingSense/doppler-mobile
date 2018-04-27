@@ -15,4 +15,7 @@
     <data name="NotUserLoggedIn">
         <value>There is not an user logged in.</value>
     </data>
+    <data name="NotPreview">
+        <value>There is not a preview for the campaign selected.</value>
+    </data>
 </root>

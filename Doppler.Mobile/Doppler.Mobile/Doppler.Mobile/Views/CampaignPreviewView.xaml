@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<w:ViewPage NavigationPage.HasNavigationBar="true"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:w="clr-namespace:Doppler.Mobile.Views;assembly=Doppler.Mobile"
+    x:Class="Doppler.Mobile.Views.CampaignPreviewView"
+    x:TypeArguments="viewModel:CampaignPreviewViewModel"
+    xmlns:viewModel="clr-namespace:Doppler.Mobile.ViewModels"
+    Title="Preview"
+    >
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout IsVisible="{Binding ShowMsgError}"
+                         BackgroundColor="Transparent" 
+                         Margin="0,10,0,0"> 
+                <Label Text="{Binding CurrentErrorMsg}"
+                       FontSize="22"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+            </StackLayout>
+            <Image IsVisible="{Binding ShowImage}"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="FillAndExpand"
+                   Aspect="AspectFit"
+                   Source="{Binding ImagePreview}" />
+        </StackLayout>
+    </ContentPage.Content>
+</w:ViewPage>

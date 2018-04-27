@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Doppler.Mobile.Core.Services;
 using Doppler.Mobile.Navigation;
 using Xamarin.Forms;
 
@@ -10,13 +11,16 @@ namespace Doppler.Mobile.ViewModels
         private readonly CampaignRecipientsInfoViewModel _campaignRecipientsInfoViewModel;
         private readonly CampaignSendingInfoViewModel _campaignSendingInfoViewModel;
         private readonly INavigationService _navigationService;
+        private readonly ICampaignService _campaignService;
 
         public CampaignDetailViewModel(CampaignBasicInfoViewModel campaignBasicInfoViewModel,
                                        CampaignRecipientsInfoViewModel campaignRecipientsInfoViewModel,
                                        CampaignSendingInfoViewModel campaignSendingInfoViewModel,
-                                       INavigationService navigationService)
+                                       INavigationService navigationService,
+                                       ICampaignService campaignService)
         {
             PreviewCommand = new Command(async () => await ExecutePreviewCommand());
+            _campaignService = campaignService;
             _campaignBasicInfoViewModel = campaignBasicInfoViewModel;
             _campaignRecipientsInfoViewModel = campaignRecipientsInfoViewModel;
             _campaignSendingInfoViewModel = campaignSendingInfoViewModel;
@@ -85,7 +89,7 @@ namespace Doppler.Mobile.ViewModels
 
         public async Task ExecutePreviewCommand()
         {
-            //TODO: - do something to show the preview
+            await _navigationService.NavigateToAsync<CampaignPreviewViewModel>();
         }
 
         public override async Task InitializeAsync(object navigationData)
@@ -96,7 +100,6 @@ namespace Doppler.Mobile.ViewModels
                 CampaignName = currentCampaign.Name;
                 CampaignType = currentCampaign.Status;
             }
-
         }
     }
 }

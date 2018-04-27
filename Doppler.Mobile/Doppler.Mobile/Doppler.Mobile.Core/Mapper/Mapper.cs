@@ -21,7 +21,8 @@ namespace Doppler.Mobile.Core.Mapper
                 Preheader = dto.Preheader,
                 ReplyTo = dto.ReplyTo,
                 TextCampaign = dto.TextCampaign,
-                Status = dto.Status
+                Status = dto.Status,
+                Links = dto.Links.Select(ToLink).ToList()
             };
         }
 
@@ -44,6 +45,16 @@ namespace Doppler.Mobile.Core.Mapper
                 Name = dto.Name,
                 ListId = dto.ListId,
                 SubscribersCount = dto.SubscribersCount
+            };
+        }
+
+        public static Link ToLink(LinkDto dto)
+        {
+            return new Link
+            {
+                HyperlinkRef = dto.HyperlinkRef,
+                Description = dto.Description,
+                Relation = dto.Relation
             };
         }
     }

@@ -56,9 +56,9 @@ namespace Doppler.Mobile.Core.Networking
         }
 
         /// <inheritdoc />
-        public async Task<Result<PageDto<CampaignDto>, string>> GetCampaignsAsync(string accountName, int pageNumber)
+        public async Task<Result<PageDto<CampaignDto>, string>> GetCampaignsAsync(string accountName, int pageNumber, string campaignType)
         {
-            var url = _configuration.ApiBaseUrl + $"accounts/{accountName}/campaigns?page={pageNumber}";
+            var url = _configuration.ApiBaseUrl + $"accounts/{accountName}/campaigns?page={pageNumber}&state={campaignType}";
             var token = GetAccessToken();
             try
             {

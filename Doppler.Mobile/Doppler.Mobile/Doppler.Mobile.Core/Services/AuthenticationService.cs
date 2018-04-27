@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Doppler.Mobile.Core.Settings;
 using Doppler.Mobile.Core.Networking;
+using Doppler.Mobile.Core.Models.Dto;
 
 namespace Doppler.Mobile.Core.Services
 {
@@ -25,7 +26,7 @@ namespace Doppler.Mobile.Core.Services
                 return new Result<bool, string>(loginResponse.ErrorValue);
 
             var user = loginResponse.SuccessValue;
-            SaveLoggedAccountInfo(apiKey, user.Username);
+            SaveLoggedAccountInfo(user, apiKey);
 
             return new Result<bool, string>(true);
         }
@@ -42,10 +43,11 @@ namespace Doppler.Mobile.Core.Services
             return new Result<bool, string>(successValue: true);
         }
 
-        private void SaveLoggedAccountInfo(string token, string accountName)
+        private void SaveLoggedAccountInfo(UserAuthenticationResponseDto user, string apiKey)
         {
-            _localSettings.AuthAccessToken = token;
-            _localSettings.AccountNameLoggedIn = accountName;
+            _localSettings.AuthAccessToken = apiKey;
+            _localSettings.AccountNameLoggedIn = user.Username;
+            _localSettings.AccountIdLoggedIn = user.AccountId;
         }
     }
 }

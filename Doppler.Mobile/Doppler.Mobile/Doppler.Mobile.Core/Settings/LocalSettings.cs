@@ -34,6 +34,13 @@ namespace Doppler.Mobile.Core.Settings
         }
 
         /// <inheritdoc />
+        public int AccountIdLoggedIn 
+        {
+            get => GetValueOrDefault(LocalSettingsKeys.AccountIdLoggedIn, 0);
+            set => AddOrUpdateValue(LocalSettingsKeys.AccountIdLoggedIn, value);
+        }
+
+        /// <inheritdoc />
         public bool AddOrUpdateValue<T>(string key, T value)
         {
             return _settingsService.AddOrUpdateValue(key, JsonConvert.SerializeObject(value));

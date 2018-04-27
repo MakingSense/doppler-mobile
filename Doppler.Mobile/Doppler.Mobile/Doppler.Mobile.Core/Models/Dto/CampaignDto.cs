@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Doppler.Mobile.Core.Models.Dto
@@ -40,6 +41,9 @@ namespace Doppler.Mobile.Core.Models.Dto
 
         [JsonProperty(PropertyName = "status", Required = Required.DisallowNull)]
         public string Status { get; set; }
+
+        [JsonProperty(PropertyName = "_links", Required = Required.DisallowNull)]
+        public IList<LinkDto> Links { get; set; }
 
     }
 }
