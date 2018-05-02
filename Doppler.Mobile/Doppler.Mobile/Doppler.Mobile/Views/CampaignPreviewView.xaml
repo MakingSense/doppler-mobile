@@ -18,11 +18,11 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
             </StackLayout>
-            <Image IsVisible="{Binding ShowImage}"
-                   HorizontalOptions="FillAndExpand"
-                   VerticalOptions="FillAndExpand"
-                   Aspect="AspectFit"
-                   Source="{Binding ImagePreview}" />
+            <WebView IsVisible="{Binding ShowHTML}"
+                     Source="{Binding HtmlSource}"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     BackgroundColor="Lime"/>
         </StackLayout>
     </ContentPage.Content>
 </w:ViewPage>

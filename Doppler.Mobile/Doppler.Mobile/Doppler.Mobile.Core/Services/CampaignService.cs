@@ -33,7 +33,7 @@ namespace Doppler.Mobile.Core.Services
             return new Result<Page<Campaign>, string>(successValue: newPage);
         }
 
-        public Result<string, string> GetCampaignPreview(Campaign campaign)
+        public Result<string, string> GetCampaignImagePreview(Campaign campaign)
         {
             var linkPreview = campaign.Links.FirstOrDefault(l => l.Relation.Contains("get-campaign-preview"));
 
@@ -41,6 +41,19 @@ namespace Doppler.Mobile.Core.Services
                 return new Result<string, string>(errorValue: CoreResources.NotPreview);
 
             return new Result<string, string>(successValue: linkPreview.HyperlinkRef);
+        }
+
+        public async Task<Result<string, string>> GetCampaignHtmlPreviewAsync(Campaign campaign)
+        {
+            var accountName = GetAccountNameLoggedIn();
+            if (string.IsNullOrEmpty(accountName))
+                return new Result<string, string>(errorValue: CoreResources.NotUserLoggedIn);
+
+            var htmlPreviewResult = await _dopplerApi.GetCampaignHtmlPreviewAsync(accountName, campaign.CampaignId);
+            if (!htmlPreviewResult.IsSuccessResult)
+                return new Result<string, string>(errorValue: htmlPreviewResult.ErrorValue);
+
+            return new Result<string, string>(successValue: htmlPreviewResult.SuccessValue);
         }
 
         private string GetAccountNameLoggedIn()

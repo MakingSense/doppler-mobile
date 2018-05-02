@@ -12,17 +12,17 @@ namespace Doppler.Mobile.ViewModels
         private readonly ICampaignService _campaignService;
 
         public CampaignPreviewViewModel(INavigationService navigationService,
-                                       ICampaignService campaignService)
+                                        ICampaignService campaignService)
         {
             _campaignService = campaignService;
             _navigationService = navigationService;
         }
 
-        private UriImageSource _imagePreview;
-        public UriImageSource ImagePreview
+        private HtmlWebViewSource _htmlSource;
+        public HtmlWebViewSource HtmlSource
         {
-            get { return _imagePreview; }
-            set { SetProperty(ref _imagePreview, value); }
+            get { return _htmlSource; }
+            set { SetProperty(ref _htmlSource, value); }
         }
         private string _currentErrorMsg;
         public string CurrentErrorMsg
@@ -35,7 +35,12 @@ namespace Doppler.Mobile.ViewModels
         public bool HasNotPreview
         {
             get { return _hasNotPreview; }
-            set { SetProperty(ref _hasNotPreview, value); }
+            set
+            {
+                SetProperty(ref _hasNotPreview, value);
+                OnPropertyChanged("ShowMsgError");
+                OnPropertyChanged("ShowHTML");
+            }
         }
 
         public bool ShowMsgError
@@ -43,7 +48,7 @@ namespace Doppler.Mobile.ViewModels
             get => HasNotPreview;
         }
 
-        public bool ShowImage
+        public bool ShowHTML
         {
             get => !HasNotPreview;
         }
@@ -54,21 +59,18 @@ namespace Doppler.Mobile.ViewModels
             var currentCampaign = _navigationService.CurrentCampaign;
             if (currentCampaign != null)
             {
-                var getPreviewResponse = _campaignService.GetCampaignPreview(currentCampaign);
+                var getPreviewResponse = await _campaignService.GetCampaignHtmlPreviewAsync(currentCampaign);
                 if (getPreviewResponse.IsSuccessResult)
                 {
-                    ImagePreview = new UriImageSource
-                    {
-                        Uri = new Uri(getPreviewResponse.SuccessValue),
-                        CachingEnabled = true,
-                        CacheValidity = new TimeSpan(5, 0, 0, 0)
-                    };
+                    var htmlSource = new HtmlWebViewSource();
+                    htmlSource.Html = getPreviewResponse.SuccessValue;
+                    HtmlSource = htmlSource;
                     HasNotPreview = false;
                 }
                 else
                 {
                     CurrentErrorMsg = getPreviewResponse.ErrorValue;
-                    HasNotPreview = false;
+                    HasNotPreview = true;
                 }
             }
         }

@@ -135,5 +135,56 @@ namespace Doppler.Mobile.Test.Services
             Assert.Null(getCampaignsResult.SuccessValue);
             Assert.False(getCampaignsResult.IsSuccessResult);
         }
+
+        [Fact]
+        public async Task GetHtmlCampaignPreviewAsync_ShouldReturnHtmlString_WhenApiGetHtmlCampaignPreviewIsSuccessful()
+        {
+            // Arrange
+            var campaignMock = new Campaign
+            {
+                CampaignId = 123
+            };
+            var localSettingsMock = new Mock<ILocalSettings>();
+            localSettingsMock.SetupGet(ls => ls.AccountNameLoggedIn).Returns("UserAccount");
+            var dopplerAPIMock = new Mock<IDopplerAPI>();
+            dopplerAPIMock
+                .Setup(dAPI => dAPI.GetCampaignHtmlPreviewAsync(It.IsAny<string>(), It.IsAny<int>()))
+                .ReturnsAsync(new Result<string, string>(successValue: "HTML HERE"));
+            ICampaignService campaignService = new CampaignService(localSettingsMock.Object, dopplerAPIMock.Object);
+
+            // Act
+            var getHtmlCampaignPreviewResult = await campaignService.GetCampaignHtmlPreviewAsync(campaignMock);
+
+            // Assert
+            Assert.True(getHtmlCampaignPreviewResult.IsSuccessResult);
+            Assert.Null(getHtmlCampaignPreviewResult.ErrorValue);
+            Assert.NotNull(getHtmlCampaignPreviewResult.SuccessValue);
+            Assert.NotEmpty(getHtmlCampaignPreviewResult.SuccessValue);
+        }
+
+        [Fact]
+        public async Task GetHtmlCampaignPreviewAsync_ShouldReturnErrorString_WhenAPIReturnsAnError()
+        {
+            // Arrange
+            var campaignMock = new Campaign
+            {
+                CampaignId = 123
+            };
+            var localSettingsMock = new Mock<ILocalSettings>();
+            localSettingsMock.SetupGet(ls => ls.AccountNameLoggedIn).Returns("UserAccount");
+            var dopplerAPIMock = new Mock<IDopplerAPI>();
+            dopplerAPIMock
+                .Setup(dAPI => dAPI.GetCampaignHtmlPreviewAsync(It.IsAny<string>(), It.IsAny<int>()))
+                .ReturnsAsync(new Result<string, string>(errorValue: "ERROR"));
+            ICampaignService campaignService = new CampaignService(localSettingsMock.Object, dopplerAPIMock.Object);
+
+            // Act
+            var getHtmlCampaignPreviewResult = await campaignService.GetCampaignHtmlPreviewAsync(campaignMock);
+
+            // Assert
+            Assert.NotNull(getHtmlCampaignPreviewResult.ErrorValue);
+            Assert.Null(getHtmlCampaignPreviewResult.SuccessValue);
+            Assert.False(getHtmlCampaignPreviewResult.IsSuccessResult);
+        }
     }
 }

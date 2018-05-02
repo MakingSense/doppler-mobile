@@ -113,6 +113,36 @@ namespace Doppler.Mobile.Core.Networking
             }
         }
 
+        /// <inheritdoc />
+        public async Task<Result<string, string>> GetCampaignHtmlPreviewAsync(string accountName, int campaignId)
+        {
+            var url = _configuration.ApiBaseUrl + $"accounts/{accountName}/campaigns/{campaignId}/content";
+            var token = GetAccessToken();
+            try
+            {
+                var html = await url.WithHeader("Authorization", $"token {token}").GetAsync().ReceiveString();
+
+
+                return new Result<string, string>(successValue: html);
+            }
+            catch (FlurlHttpException ex)
+            {
+                try
+                {
+                    var dopplerError = await ex.GetResponseJsonAsync<DopplerErrorDto>();
+                    return new Result<string, string>(errorValue: dopplerError.Detail);
+                }
+                catch
+                {
+                    return new Result<string, string>(errorValue: ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result<string, string>(errorValue: ex.Message);
+            }
+        }
+
         private string GetAccessToken()
         {
             return _localSettings.AuthAccessToken;
