@@ -116,10 +116,13 @@ namespace Doppler.Mobile.ViewModels
                 return;
 
             IsBusy = true;
-            var campaignServiceResponse = await _campaignService.FetchCampaignsAsync(pageNumber);
+            var campaignServiceResponse = await _campaignService.FetchCampaignsAsync(pageNumber, "draft");
 
             if (!campaignServiceResponse.IsSuccessResult)
-                OnFetchCampaignFailed(campaignServiceResponse.ErrorValue);
+            {
+                IsBusy = false;
+                OnFetchCampaignFailed(campaignServiceResponse.ErrorValue);   
+            }
 
             OnFetchCampaignSuccess(campaignServiceResponse.SuccessValue.Items, campaignServiceResponse.SuccessValue.CurrentPage, campaignServiceResponse.SuccessValue.PagesCount);
             IsBusy = false;

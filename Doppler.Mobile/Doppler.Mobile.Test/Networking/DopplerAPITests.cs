@@ -119,7 +119,7 @@ namespace Doppler.Mobile.Test.Networking
                 IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
 
                 // Act
-                var getCampaignsResult = await dopplerAPI.GetCampaignsAsync("Test@email.com", 1);
+                var getCampaignsResult = await dopplerAPI.GetCampaignsAsync("Test@email.com", 1, "draft");
 
                 // Assert
                 Assert.True(getCampaignsResult.IsSuccessResult);
@@ -148,7 +148,7 @@ namespace Doppler.Mobile.Test.Networking
                 IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
 
                 // Act
-                var getCampaignsResult  = await dopplerAPI.GetCampaignsAsync("TestUser@domain.com", 1);
+                var getCampaignsResult  = await dopplerAPI.GetCampaignsAsync("TestUser@domain.com", 1, "draft");
 
                 // Assert
                 Assert.False(getCampaignsResult.IsSuccessResult);
@@ -215,5 +215,61 @@ namespace Doppler.Mobile.Test.Networking
                 Assert.StartsWith(errorMsg, getCampaignRecipientsResult.ErrorValue);
             }
         }
+
+        [Fact]
+        public async Task GetHtmlCampaignPreviewAsync_ShouldReturnHtmlString_WhenConnectionIsSuccessful()
+        {
+            // Arrange
+            var localSettingsMock = new Mock<ILocalSettings>();
+            var configurationSettings = new ConfigurationSettingsDouble
+            {
+                ApiBaseUrl = "https://yahoo.com"
+            };
+
+            using (var httpTest = new HttpTest())
+            {
+                httpTest.RespondWith("HTML HERE");
+
+                IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
+
+                // Act
+                var getHtmlCampaignPreviewResult = await dopplerAPI.GetCampaignHtmlPreviewAsync("Test@email.com", 12323);
+
+                // Assert
+                Assert.True(getHtmlCampaignPreviewResult.IsSuccessResult);
+                Assert.Null(getHtmlCampaignPreviewResult.ErrorValue);
+                Assert.NotNull(getHtmlCampaignPreviewResult.SuccessValue);
+                Assert.NotEmpty(getHtmlCampaignPreviewResult.SuccessValue);
+            }
+        }
+
+        [Fact]
+        public async Task GetHtmlCampaignPreviewAsync_ShouldReturnErrorString_WhenConnectionFailed()
+        {
+            // Arrange
+            var localSettingsMock = new Mock<ILocalSettings>();
+            var configurationSettings = new ConfigurationSettingsDouble
+            {
+                ApiBaseUrl = "https://yahoo.com"
+            };
+
+            using (var httpTest = new HttpTest())
+            {
+                var errorMsg = "Call failed with status code 500 (Internal Server Error)";
+                httpTest.RespondWith(errorMsg, 500);
+
+                IDopplerAPI dopplerAPI = new DopplerAPI(configurationSettings, localSettingsMock.Object);
+
+                // Act
+                var getHtmlCampaignPreviewResult  = await dopplerAPI.GetCampaignHtmlPreviewAsync("TestUser@domain.com", 12323);
+
+                // Assert
+                Assert.False(getHtmlCampaignPreviewResult.IsSuccessResult);
+                Assert.NotNull(getHtmlCampaignPreviewResult.ErrorValue);
+                Assert.Null(getHtmlCampaignPreviewResult.SuccessValue);
+                Assert.StartsWith(errorMsg, getHtmlCampaignPreviewResult.ErrorValue);
+            }
+        }
+
     }
 }

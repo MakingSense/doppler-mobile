@@ -10,7 +10,18 @@ namespace Doppler.Mobile.Core.Services
     {
         /// <summary> Gets a list of campaigns </summary>
         /// <param name="pageNumber"> Page number represents number of page that we want to get </param>
+        /// <param name="campaignType"> Type of campaign that we want to get </param>
         /// <returns> List of campaigns if fetch was successful, otherwise error message </returns>
-        Task<Result<Page<Campaign>, string>> FetchCampaignsAsync(int pageNumber);
+        Task<Result<Page<Campaign>, string>> FetchCampaignsAsync(int pageNumber, string campaignType);
+
+        /// <summary> Gets the image preview url </summary>
+        /// <param name="campaign"> this is the campaign that we want to get the preview </param>
+        /// <returns> Url string if the campaign has a preview, otherwise error message </returns>
+        Result<string, string> GetCampaignImagePreview(Campaign campaign);
+
+        /// <summary> Gets the html preview </summary>
+        /// <param name="campaign"> this is the campaign that we want to get the preview </param>
+        /// <returns> Html string if the campaign has a preview, otherwise error message </returns>
+        Task<Result<string, string>> GetCampaignHtmlPreviewAsync(Campaign campaign);
     }
 }

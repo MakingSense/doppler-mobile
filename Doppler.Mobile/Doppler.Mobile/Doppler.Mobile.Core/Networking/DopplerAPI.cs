@@ -56,9 +56,9 @@ namespace Doppler.Mobile.Core.Networking
         }
 
         /// <inheritdoc />
-        public async Task<Result<PageDto<CampaignDto>, string>> GetCampaignsAsync(string accountName, int pageNumber)
+        public async Task<Result<PageDto<CampaignDto>, string>> GetCampaignsAsync(string accountName, int pageNumber, string campaignType)
         {
-            var url = _configuration.ApiBaseUrl + $"accounts/{accountName}/campaigns?page={pageNumber}";
+            var url = _configuration.ApiBaseUrl + $"accounts/{accountName}/campaigns?page={pageNumber}&state={campaignType}";
             var token = GetAccessToken();
             try
             {
@@ -110,6 +110,36 @@ namespace Doppler.Mobile.Core.Networking
             catch (Exception ex)
             {
                 return new Result<CampaignRecipientListDto, string>(ex.Message);
+            }
+        }
+
+        /// <inheritdoc />
+        public async Task<Result<string, string>> GetCampaignHtmlPreviewAsync(string accountName, int campaignId)
+        {
+            var url = _configuration.ApiBaseUrl + $"accounts/{accountName}/campaigns/{campaignId}/content";
+            var token = GetAccessToken();
+            try
+            {
+                var html = await url.WithHeader("Authorization", $"token {token}").GetAsync().ReceiveString();
+
+
+                return new Result<string, string>(successValue: html);
+            }
+            catch (FlurlHttpException ex)
+            {
+                try
+                {
+                    var dopplerError = await ex.GetResponseJsonAsync<DopplerErrorDto>();
+                    return new Result<string, string>(errorValue: dopplerError.Detail);
+                }
+                catch
+                {
+                    return new Result<string, string>(errorValue: ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result<string, string>(errorValue: ex.Message);
             }
         }
 

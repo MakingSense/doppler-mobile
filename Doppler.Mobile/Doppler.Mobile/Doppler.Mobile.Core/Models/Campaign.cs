@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Doppler.Mobile.Core.Models
 {
@@ -27,5 +28,7 @@ namespace Doppler.Mobile.Core.Models
         public bool TextCampaign { get; set; }
 
         public string Status { get; set; }
+
+        public IList<Link> Links { get; set; }
     }
 }

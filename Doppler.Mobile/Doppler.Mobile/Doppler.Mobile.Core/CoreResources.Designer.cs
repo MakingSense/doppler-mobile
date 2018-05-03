@@ -52,5 +52,11 @@ namespace Doppler.Mobile.Core {
                 return ResourceManager.GetString("NotUserLoggedIn", resourceCulture);
             }
         }
+        
+        public static string NotPreview {
+            get {
+                return ResourceManager.GetString("NotPreview", resourceCulture);
+            }
+        }
     }
 }

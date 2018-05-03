@@ -17,6 +17,9 @@
         /// <summary> Fast access to data related to the key "AccountNameLoggedIn" </summary>
         string AccountNameLoggedIn { get; set; }
 
+        /// <summary> Fast access to data related to the key "Account id logged in" </summary>
+        int AccountIdLoggedIn { get; set; }
+
         /// <summary> Add or update a key with a new value </summary>
         /// <param name="key"> The key is used to refer to an element </param>
         /// <param name="value"> The value is the object which will be stored </param>
