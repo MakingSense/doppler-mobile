@@ -23,7 +23,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Doppler</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.Doppler.Mobile</string>
+	<string>com.makingsense.doppler-mobile</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleIconFiles</key>
@@ -57,5 +57,12 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>Doppler</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
