@@ -18,21 +18,23 @@
             </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
                    Text="LISTS"
-                   FontSize="17"
+                   FontSize="16"
                    TextColor="Black"/>
                 <Label Grid.Column="1"
                    HorizontalTextAlignment="End"
                    Text="SUBSCRIBERS"
-                   FontSize="17"
+                   FontSize="16"
                    TextColor="Black"/>
             </Grid>
             <BoxView HeightRequest="1" BackgroundColor="#979797" />
             <ListView x:Name="SubscriberListView"
-                    ItemsSource="{Binding ListOfCampaignRecipient}"
-                    VerticalOptions="FillAndExpand"
-                    HasUnevenRows="true"
-                    IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-                    CachingStrategy="RecycleElement" >
+                      ItemsSource="{Binding ListOfCampaignRecipient}"
+                      VerticalOptions="FillAndExpand"
+                      HasUnevenRows="true"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                      CachingStrategy="RecycleElement"
+                      SelectedItem="{Binding ItemSelected, Mode=TwoWay}"
+                      >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
