@@ -22,6 +22,20 @@ namespace Doppler.Mobile.ViewModels
             InitializeAsync();
         }
 
+        private CampaignRecipient _itemSelected;
+        public CampaignRecipient ItemSelected
+        {
+            get => null;
+
+            set
+            {
+                if (value != null)
+                {
+                    SetProperty(ref _itemSelected, value);
+                }
+            }
+        }
+
         public ObservableCollection<CampaignRecipient> ListOfCampaignRecipient { get; set; }
 
         private async void InitializeAsync()
